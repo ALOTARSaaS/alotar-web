@@ -144,12 +144,12 @@ main section[id]{
 .brand{
   display:flex;
   align-items:center;
-  gap:14px;
+  gap:10px;
   min-width:0;
 }
 
 .brand-icon{
-  height:46px;
+  height:70px;
   width:auto;
   object-fit:contain;
   animation:alotarGlow 4s ease-in-out infinite;
