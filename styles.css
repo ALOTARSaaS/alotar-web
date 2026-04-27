@@ -160,6 +160,7 @@ main section[id]{
   object-fit:contain;
   animation:alotarGlow 4s ease-in-out infinite;
   filter: drop-shadow(0 0 6px rgba(255, 200, 80, 0.6));
+  margin-right:4px; /* 👈 ajuste fino */
 }
 
 .brand-text-wrap{
