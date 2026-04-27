@@ -140,6 +140,46 @@ main section[id]{
   animation:alotarGlow 4s ease-in-out infinite;
 }
 
+.brand-full{
+  display:flex;
+  align-items:center;
+  flex-shrink:0;
+}
+
+.brand-logo-full{
+  height:58px;
+  width:auto;
+  max-width:280px;
+  object-fit:contain;
+  filter:drop-shadow(0 0 8px rgba(255,200,80,.35));
+}
+
+.footer-logo-full{
+  height:54px;
+  width:auto;
+  max-width:260px;
+  object-fit:contain;
+}
+
+@media(max-width:980px){
+  .brand-logo-full{
+    height:50px;
+    max-width:230px;
+  }
+}
+
+@media(max-width:640px){
+  .brand-logo-full{
+    height:42px;
+    max-width:180px;
+  }
+
+  .footer-logo-full{
+    height:42px;
+    max-width:180px;
+  }
+}
+
 .brand-text-wrap{
   display:flex;
   flex-direction:column;
