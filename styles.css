@@ -111,20 +111,47 @@ main section[id]{
   gap:22px;
 }
 
+/* MARCA */
 .brand{
   display:flex;
   align-items:center;
-  justify-content:flex-start;
+  gap:10px;
   flex-shrink:0;
   min-width:0;
 }
 
-.brand-logo{
-  height:58px;
+.brand-icon{
+  height:52px;
   width:auto;
-  max-width:285px;
   object-fit:contain;
-  filter:drop-shadow(0 0 8px rgba(255,200,80,.35));
+  filter:drop-shadow(0 0 8px rgba(255,200,80,.45));
+}
+
+.brand-text-wrap{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  line-height:1;
+}
+
+.brand-main{
+  font-weight:900;
+  font-size:20px;
+  letter-spacing:.08em;
+  background:linear-gradient(180deg,#fff6c2,#ffd86b,#d4a017,#b8860b);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  text-shadow:0 0 10px rgba(255,215,0,.25);
+}
+
+.brand-sub{
+  font-size:11px;
+  letter-spacing:.18em;
+  margin-top:3px;
+  background:linear-gradient(180deg,#ffffff,#cbd5e1,#94a3b8);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  opacity:.88;
 }
 
 .menu{
