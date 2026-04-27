@@ -140,7 +140,7 @@ main section[id]{
 .brand{
   display:flex;
   align-items:center;
-  gap:12px;
+  gap:6px;
   min-width:0;
 }
 
