@@ -121,7 +121,7 @@ main section[id]{
 }
 
 .brand-icon{
-  height:52px;
+  height:80px;
   width:auto;
   object-fit:contain;
   filter:drop-shadow(0 0 8px rgba(255,200,80,.45));
