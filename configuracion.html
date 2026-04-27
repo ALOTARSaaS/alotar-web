@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Configuración Inicial | ALOTAR</title>
+  <meta name="robots" content="noindex">
+
+  <link rel="icon" href="favicon.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+<header class="site-header">
+  <div class="container nav">
+
+    <a href="index.html#inicio" class="brand" aria-label="Ir al inicio">
+      <img src="logo.png" alt="ALOTAR Logo" class="brand-icon">
+
+      <div class="brand-text-wrap">
+        <div class="brand-main">ALOTAR</div>
+        <div class="brand-sub">Booking System</div>
+      </div>
+    </a>
+
+    <nav class="menu" aria-label="Menú principal">
+      <a href="index.html#inicio">Inicio</a>
+      <a href="index.html#solucion">Solución</a>
+      <a href="index.html#beneficios">Beneficios</a>
+      <a href="index.html#contacto">Contacto</a>
+      <a class="active" href="configuracion.html">Configuración</a>
+    </nav>
+
+    <a class="btn btn-primary btn-glow" href="index.html#contacto">
+      Solicitar ayuda
+    </a>
+
+  </div>
+</header>
+
+<main>
+
+<section class="section alt" id="configuracion">
+  <div class="container">
+
+    <div class="section-heading">
+      <p class="eyebrow">Guía inicial</p>
+
+      <h1>
+        Configuración inicial del <span class="gold-text">sistema</span>
+      </h1>
+
+      <p>
+        Sigue estos pasos para activar correctamente tu sistema de reservas ALOTAR y evitar errores frecuentes.
+      </p>
+    </div>
+
+    <div class="cards one">
+
+      <article class="card">
+        <h3>🔐 Calendar ID obligatorio</h3>
+
+        <p>
+          Este es el calendario donde se guardarán las reservas del cliente.
+        </p>
+
+        <ol>
+          <li>Abre Google Calendar.</li>
+          <li>Selecciona el calendario que se usará para las reservas.</li>
+          <li>Entra a <strong>Configuración</strong>.</li>
+          <li>Busca la sección <strong>Integrar calendario</strong>.</li>
+          <li>Copia el <strong>ID del calendario</strong>.</li>
+        </ol>
+
+        <p>Ejemplo:</p>
+
+        <code>abc123@group.calendar.google.com</code>
+
+        <p class="bad">⚠️ Error común: copiar el nombre del calendario en vez del Calendar ID.</p>
+        <p class="bad">⚠️ Error común: no compartir el calendario con permisos de edición.</p>
+
+        <p class="good">✔ El calendario debe estar compartido correctamente para que ALOTAR pueda crear reservas.</p>
+      </article>
+
+      <article class="card">
+        <h3>🖼 Logo FILE ID</h3>
+
+        <p>
+          El <strong>Logo File ID</strong> permite mostrar el logo de tu empresa en la aplicación,
+          en los correos automáticos y en la experiencia visual del sistema.
+        </p>
+
+        <div style="
+          margin-top:16px;
+          padding:16px;
+          border-radius:14px;
+          background:linear-gradient(135deg, rgba(245,180,40,.10), rgba(255,255,255,.04));
+          border:1px solid rgba(212,160,23,.25);
+        ">
+
+          <strong class="gold-text">Requisitos recomendados del logo</strong>
+
+          <ul style="margin-top:12px; line-height:1.7;">
+            <li><strong>Formato:</strong> PNG preferiblemente.</li>
+            <li><strong>Fondo:</strong> transparente.</li>
+            <li><strong>Tamaño ideal:</strong> 800 × 800 px.</li>
+            <li><strong>Tamaño mínimo:</strong> 400 × 400 px.</li>
+            <li><strong>Peso recomendado:</strong> menor a 300 KB.</li>
+            <li><strong>Forma:</strong> cuadrado, no tipo banner horizontal.</li>
+            <li><strong>Color:</strong> claro, blanco o dorado si se usará sobre fondo oscuro.</li>
+          </ul>
+
+        </div>
+
+        <div class="cards two" style="margin-top:18px;">
+
+          <div class="mini-card">
+            <h3 class="good">✔ Logo recomendado</h3>
+            <p>Logo cuadrado, nítido, con fondo transparente y buena lectura sobre fondo oscuro.</p>
+
+            <div style="
+              margin-top:12px;
+              height:120px;
+              border-radius:14px;
+              display:flex;
+              align-items:center;
+              justify-content:center;
+              background:#020617;
+              border:1px solid rgba(74,222,128,.35);
+              color:#f5d77a;
+              font-weight:800;
+              letter-spacing:.08em;
+            ">
+              LOGO
+            </div>
+          </div>
+
+          <div class="mini-card">
+            <h3 class="bad">✘ Logo no recomendado</h3>
+            <p>Logo tipo banner, pixelado, con fondo blanco o texto demasiado pequeño.</p>
+
+            <div style="
+              margin-top:12px;
+              height:120px;
+              border-radius:14px;
+              display:flex;
+              align-items:center;
+              justify-content:center;
+              background:#ffffff;
+              border:1px solid rgba(248,113,113,.45);
+              color:#111827;
+              font-size:12px;
+              font-weight:700;
+            ">
+              logo muy pequeño / fondo blanco
+            </div>
+          </div>
+
+        </div>
+
+        <p class="bad">
+          ⚠️ Evita logos con fondo blanco, pixelados, muy oscuros o con texto demasiado pequeño.
+        </p>
+
+        <h4 style="margin-top:18px;">Cómo obtener el Logo File ID</h4>
+
+        <ol style="line-height:1.7;">
+          <li>Sube tu logo a Google Drive.</li>
+          <li>Haz clic derecho sobre el archivo.</li>
+          <li>Selecciona <strong>Compartir</strong>.</li>
+          <li>Cambia el acceso a <strong>Cualquier persona con el enlace</strong>.</li>
+          <li>Copia el enlace del archivo.</li>
+        </ol>
+
+        <p>Ejemplo de enlace:</p>
+
+        <code>https://drive.google.com/file/d/1ABCxyz123/view</code>
+
+        <p>El <strong>Logo File ID</strong> es esta parte:</p>
+
+        <code>1ABCxyz123</code>
+
+        <div style="margin-top:22px;">
+          <label style="
+            display:block;
+            color:#b6c2d1;
+            font-size:11px;
+            letter-spacing:.14em;
+            text-transform:uppercase;
+            margin-bottom:8px;
+          ">
+            Validar logo con File ID
+          </label>
+
+          <input
+            type="text"
+            id="logoInput"
+            placeholder="Ej: 1ABCxyz123"
+          >
+
+          <button
+            type="button"
+            class="btn btn-primary"
+            style="margin-top:12px;"
+            onclick="previewLogo()"
+          >
+            Verificar logo
+          </button>
+
+          <div id="logoPreview" style="margin-top:16px;"></div>
+
+          <p class="bad">
+            ⚠️ Si no ves el logo en la vista previa, revisa que el File ID sea correcto y que el archivo esté compartido como “Cualquier persona con el enlace”.
+          </p>
+        </div>
+
+        <p class="good">
+          ✔ Si el logo está bien configurado, se verá correctamente en la app, en los correos y en la experiencia del cliente.
+        </p>
+      </article>
+
+      <article class="card">
+        <h3>📍 Configuración de sedes</h3>
+
+        <p>
+          Cada sede representa un punto de atención físico o virtual donde se podrán crear reservas.
+        </p>
+
+        <h3>Sede física</h3>
+        <ul>
+          <li>Nombre de la sede.</li>
+          <li>Dirección completa.</li>
+          <li>Enlace de Google Maps.</li>
+          <li>Capacidad disponible si aplica.</li>
+        </ul>
+
+        <h3>Sede virtual</h3>
+        <ul>
+          <li>Plataforma: Google Meet, Zoom u otra.</li>
+          <li>Link de acceso.</li>
+          <li>Notas o instrucciones para el usuario.</li>
+        </ul>
+
+        <p class="bad">⚠️ Error común: crear horarios sin haber configurado primero las sedes.</p>
+        <p class="good">✔ Configura primero las sedes y luego los horarios de atención.</p>
+      </article>
+
+      <article class="card">
+        <h3>⏰ Horarios de atención</h3>
+
+        <p>
+          Los horarios permiten que el sistema muestre disponibilidad real para las reservas.
+        </p>
+
+        <ul>
+          <li>Hora de inicio.</li>
+          <li>Hora de finalización.</li>
+          <li>Sede correspondiente.</li>
+          <li>Capacidad por bloque.</li>
+        </ul>
+
+        <p class="bad">⚠️ Sin horarios configurados, no habrá reservas disponibles.</p>
+        <p class="good">✔ Crea bloques claros y verifica que no se crucen entre sedes.</p>
+      </article>
+
+      <article class="card">
+        <h3>⚠️ Errores comunes</h3>
+
+        <ul>
+          <li>Calendar ID incorrecto.</li>
+          <li>Calendario sin permisos de edición.</li>
+          <li>Logo sin permisos de visualización.</li>
+          <li>Logo muy pesado o con baja calidad.</li>
+          <li>No crear sedes antes de crear horarios.</li>
+          <li>No crear bloques de atención.</li>
+        </ul>
+      </article>
+
+    </div>
+
+    <div class="hero-actions top-gap">
+      <a class="btn btn-primary" href="index.html#contacto">Solicitar ayuda</a>
+      <a class="btn btn-outline" href="index.html#inicio">Volver al inicio</a>
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-wrap">
+
+    <div class="footer-brand">
+      <img src="logo.png" alt="ALOTAR Logo" class="brand-icon">
+
+      <div>
+        <strong>Powered by ALOTAR</strong>
+        <p>Booking System Technology</p>
+      </div>
+    </div>
+
+    <div class="footer-meta">
+      <a href="mailto:info@alotar.com">info@alotar.com</a>
+      <a href="index.html#contacto">Solicitar demo</a>
+      <span>© 2026 · All rights reserved</span>
+    </div>
+
+  </div>
+</footer>
+
+<button
+  class="scroll-top-btn"
+  onclick="window.scrollTo({top:0, behavior:'smooth'})"
+  aria-label="Volver arriba"
+  title="Volver arriba"
+>
+  ↑
+</button>
+
+<script>
+function previewLogo(){
+  const input = document.getElementById("logoInput");
+  const preview = document.getElementById("logoPreview");
+
+  const fileId = input.value.trim();
+
+  if (!fileId) {
+    preview.innerHTML = `
+      <div style="
+        padding:14px;
+        border-radius:12px;
+        background:linear-gradient(135deg, rgba(248,113,113,.15), rgba(255,255,255,.05));
+        border:1px solid rgba(248,113,113,.4);
+        color:#e5e7eb;
+      ">
+        Debes ingresar un Logo File ID.
+      </div>
+    `;
+    return;
+  }
+
+  const imageUrl = `https://drive.google.com/thumbnail?id=${fileId}&sz=w400`;
+
+  preview.innerHTML = `
+    <div style="
+      padding:18px;
+      border-radius:14px;
+      background:#020617;
+      border:1px solid rgba(245,215,122,.30);
+      text-align:center;
+    ">
+      <p style="margin-bottom:12px;color:#cbd5e1;">
+        Vista previa del logo:
+      </p>
+
+      <img
+        src="${imageUrl}"
+        alt="Vista previa del logo"
+        style="
+          max-width:220px;
+          max-height:220px;
+          margin:0 auto;
+          object-fit:contain;
+          border-radius:12px;
+        "
+        onerror="logoPreviewError()"
+      >
+
+      <p class="good" style="margin-top:12px;">
+        ✔ Si el logo aparece aquí, el File ID es válido y el archivo tiene permisos correctos.
+      </p>
+    </div>
+  `;
+}
+
+function logoPreviewError(){
+  const preview = document.getElementById("logoPreview");
+
+  preview.innerHTML = `
+    <div style="
+      padding:14px;
+      border-radius:12px;
+      background:linear-gradient(135deg, rgba(248,113,113,.15), rgba(255,255,255,.05));
+      border:1px solid rgba(248,113,113,.4);
+      color:#e5e7eb;
+    ">
+      No fue posible mostrar el logo. Verifica que el File ID sea correcto y que el archivo esté compartido como “Cualquier persona con el enlace”.
+    </div>
+  `;
+}
+</script>
+
+<script src="app.js"></script>
+
+</body>
+</html>
