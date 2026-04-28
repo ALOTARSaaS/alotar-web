@@ -20,38 +20,45 @@ document.addEventListener('DOMContentLoaded', () => {
    2) FORMULARIO DE CONTACTO
 ========================================================= */
 function initContactForm(){
+
   const form = document.getElementById('contactForm');
   const note = document.getElementById('formNote');
 
   if (!form || !note) return;
 
-  const params = new URLSearchParams(window.location.search);
-  const mode = params.get("mode");
+  // 👇 FORZAR lectura del modo
+  setTimeout(() => {
 
-  if (mode === "soporte") {
-    const contacto = document.getElementById("contacto");
+    const params = new URLSearchParams(window.location.search);
+    const mode = params.get("mode");
 
-    const title = contacto.querySelector(".section-heading h2");
-    const desc = contacto.querySelector(".section-heading p");
-    const select = form.querySelector('select[name="tipo_demo"]');
-    const textarea = form.querySelector('textarea[name="mensaje"]');
+    if (mode === "soporte") {
 
-    if (title) {
-      title.innerHTML = 'Solicita <span class="gold-text">soporte</span>';
+      const contacto = document.getElementById("contacto");
+
+      const title = contacto.querySelector(".section-heading h2");
+      const desc = contacto.querySelector(".section-heading p");
+      const select = form.querySelector('select[name="tipo_demo"]');
+      const textarea = form.querySelector('textarea[name="mensaje"]');
+
+      if (title) {
+        title.innerHTML = 'Solicita <span class="gold-text">soporte</span>';
+      }
+
+      if (desc) {
+        desc.textContent = "Cuéntanos tu problema y te ayudamos a configurar correctamente ALOTAR.";
+      }
+
+      if (select) {
+        select.value = "multi_calendar";
+      }
+
+      if (textarea) {
+        textarea.value = "Necesito ayuda con la configuración del sistema.";
+      }
     }
 
-    if (desc) {
-      desc.textContent = "Déjanos tu caso y te ayudamos a configurar correctamente tu sistema ALOTAR.";
-    }
-
-    if (select) {
-      select.value = "multi_calendar";
-    }
-
-    if (textarea) {
-      textarea.value = "Necesito ayuda con la configuración del sistema.";
-    }
-  }
+  }, 200); // 👈 clave
 
   form.addEventListener('submit', handleContactSubmit);
 }
