@@ -100,6 +100,22 @@ async function handleContactSubmit(event){
   const button = form.querySelector('button[type="submit"]');
   const payload = getFormData(form);
 
+  console.log("DATOS FORMULARIO:", payload);
+
+
+if (!payload.correo || !payload.correo.includes("@")) {
+  setFormMessage(note, '❌ Validación FRONTEND: correo inválido', 'error');
+  console.warn("Correo inválido detectado en frontend");
+  return;
+}
+
+if (!payload.telefono || payload.telefono.length < 7) {
+  setFormMessage(note, '❌ Validación FRONTEND: teléfono inválido', 'error');
+  console.warn("Teléfono inválido detectado en frontend");
+  return;
+}
+  
+
   if (!validateContactForm(payload, note)) return;
 
   const originalButtonText = button ? button.textContent : '';
