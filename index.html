@@ -10,6 +10,9 @@
   <meta name="description" content="ALOTAR Booking System automatiza reservas, confirmaciones y gestión operativa para negocios que quieren crecer con orden, control e imagen profesional.">
 
   <link rel="stylesheet" href="styles.css">
+
+  <!-- Teléfono internacional -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/css/intlTelInput.min.css">
 </head>
 
 <body>
@@ -75,7 +78,6 @@
 
       <div class="hero-card">
         <div class="product-window">
-
           <div class="window-top">
             <span></span><span></span><span></span>
           </div>
@@ -107,7 +109,6 @@
               </div>
             </div>
           </div>
-
         </div>
       </div>
 
@@ -116,7 +117,6 @@
 
   <section class="section alt" id="solucion">
     <div class="container">
-
       <div class="section-heading">
         <p class="eyebrow">La solución</p>
 
@@ -145,13 +145,11 @@
           <p>Gestiona tu operación, disponibilidad y seguimiento en tiempo real.</p>
         </article>
       </div>
-
     </div>
   </section>
 
   <section class="section" id="beneficios">
     <div class="container">
-
       <div class="section-heading">
         <p class="eyebrow">Beneficios</p>
 
@@ -180,7 +178,6 @@
           <p>Prepara tu operación para crecer sin perder orden ni control.</p>
         </article>
       </div>
-
     </div>
   </section>
 
@@ -226,15 +223,19 @@
       <form id="contactForm" class="contact-form">
 
         <label>Nombre
-          <input type="text" name="nombre" placeholder="Tu nombre" required>
+          <input type="text" name="nombre" placeholder="Tu nombre" required minlength="3" maxlength="60">
         </label>
 
         <label>Correo
           <input type="email" name="correo" placeholder="correo@empresa.com" required>
         </label>
 
+        <label>Teléfono / WhatsApp
+          <input type="tel" id="telefono" name="telefono" placeholder="300 123 4567" required>
+        </label>
+
         <label>Empresa
-          <input type="text" name="empresa" placeholder="Nombre de tu empresa">
+          <input type="text" name="empresa" placeholder="Nombre de tu empresa" minlength="2" maxlength="80">
         </label>
 
         <label>Tipo de demo
@@ -246,7 +247,7 @@
         </label>
 
         <label>Mensaje
-          <textarea name="mensaje" rows="4" placeholder="Cuéntanos brevemente qué necesitas"></textarea>
+          <textarea name="mensaje" rows="4" placeholder="Cuéntanos brevemente qué necesitas" maxlength="500"></textarea>
         </label>
 
         <button type="submit" class="btn btn-primary">
@@ -292,7 +293,9 @@
   ↑
 </button>
 
-<script src="app.js?v=5"></script>
+<script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/intlTelInput.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/utils.js"></script>
+<script src="app.js?v=6"></script>
 
 </body>
 </html>

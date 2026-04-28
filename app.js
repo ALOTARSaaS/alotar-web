@@ -4,22 +4,39 @@
 
 const API_URL = "https://script.google.com/macros/s/AKfycbyPlboReKGoAbs33kt9jw-jO7BLD1-9RFd5Tjx_le4lss-KXHRcd84dE9zU3QWoesE/exec";
 
+let telefonoInput = null;
 
 /* =========================================================
    1) INICIALIZACIÓN
 ========================================================= */
 document.addEventListener('DOMContentLoaded', () => {
+  initPhoneInput();
   initContactForm();
   initActiveMenu();
   initSmoothScroll();
   initHeaderScroll();
 });
 
+/* =========================================================
+   2) TELÉFONO / WHATSAPP INTERNACIONAL
+========================================================= */
+function initPhoneInput(){
+  const input = document.querySelector("#telefono");
+
+  if (!input || !window.intlTelInput) return;
+
+  telefonoInput = window.intlTelInput(input, {
+    initialCountry: "co",
+    preferredCountries: ["co", "us", "mx", "es", "pa", "ec", "pe", "cl"],
+    separateDialCode: true,
+    nationalMode: false,
+    utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/utils.js"
+  });
+}
 
 /* =========================================================
-   2) FORMULARIO DE CONTACTO
+   3) FORMULARIO DE CONTACTO
 ========================================================= */
-
 function initContactForm(){
   const form = document.getElementById('contactForm');
   const note = document.getElementById('formNote');
@@ -31,12 +48,19 @@ function initContactForm(){
   window.addEventListener("hashchange", applyContactMode);
   window.addEventListener("popstate", applyContactMode);
 
+  document.querySelectorAll(".js-demo-contact").forEach(btn => {
+    btn.addEventListener("click", () => {
+      history.replaceState(null, "", "index.html#contacto");
+      applyContactMode("demo");
+    });
+  });
+
   form.addEventListener('submit', handleContactSubmit);
 }
 
-function applyContactMode(){
+function applyContactMode(forceMode){
   const params = new URLSearchParams(window.location.search);
-  const mode = params.get("mode");
+  const mode = forceMode || params.get("mode");
 
   const contacto = document.getElementById("contacto");
   const form = document.getElementById("contactForm");
@@ -49,35 +73,24 @@ function applyContactMode(){
   const textarea = form.querySelector('textarea[name="mensaje"]');
 
   if (mode === "soporte") {
-    if (title) {
-      title.innerHTML = 'Solicita <span class="gold-text">soporte</span>';
-    }
-
-    if (desc) {
-      desc.textContent = "Cuéntanos tu caso y te ayudamos a configurar correctamente tu sistema ALOTAR.";
-    }
-
-    if (select) {
-      select.value = "multi_calendar";
-    }
-
+    if (title) title.innerHTML = 'Solicita <span class="gold-text">soporte</span>';
+    if (desc) desc.textContent = "Cuéntanos tu caso y te ayudamos a configurar correctamente tu sistema ALOTAR.";
+    if (select) select.value = "multi_calendar";
     if (textarea && !textarea.value.trim()) {
       textarea.value = "Necesito ayuda con la configuración del sistema.";
     }
-
   } else {
-    if (title) {
-      title.innerHTML = 'Solicita tu <span class="gold-text">demostración</span>';
-    }
-
-    if (desc) {
-      desc.textContent = "Déjanos tus datos y te mostraremos cómo ALOTAR puede transformar la gestión de tus reservas.";
+    if (title) title.innerHTML = 'Solicita tu <span class="gold-text">demostración</span>';
+    if (desc) desc.textContent = "Déjanos tus datos y te mostraremos cómo ALOTAR puede transformar la gestión de tus reservas.";
+    if (select) select.value = "";
+    if (textarea && textarea.value === "Necesito ayuda con la configuración del sistema.") {
+      textarea.value = "";
     }
   }
 }
 
 /* =========================================================
-   3) ENVÍO DEL FORMULARIO
+   4) ENVÍO DEL FORMULARIO
 ========================================================= */
 async function handleContactSubmit(event){
   event.preventDefault();
@@ -86,6 +99,8 @@ async function handleContactSubmit(event){
   const note = document.getElementById('formNote');
   const button = form.querySelector('button[type="submit"]');
   const payload = getFormData(form);
+
+  if (!validateContactForm(payload, note)) return;
 
   const originalButtonText = button ? button.textContent : '';
 
@@ -114,6 +129,12 @@ async function handleContactSubmit(event){
     if (result && result.ok) {
       setFormMessage(note, result.message || 'Solicitud enviada correctamente.', 'ok');
       form.reset();
+
+      if (telefonoInput) {
+        telefonoInput.setCountry("co");
+      }
+
+      applyContactMode();
     } else {
       setFormMessage(note, result.message || 'No fue posible enviar la solicitud.', 'error');
     }
@@ -129,25 +150,91 @@ async function handleContactSubmit(event){
   }
 }
 
+/* =========================================================
+   5) VALIDACIONES
+========================================================= */
+function validateContactForm(data, note){
+  const nombre = String(data.nombre || '').trim();
+  const correo = String(data.correo || '').trim();
+  const empresa = String(data.empresa || '').trim();
+  const tipoDemo = String(data.tipo_demo || '').trim();
+  const mensaje = String(data.mensaje || '').trim();
+
+  if (nombre.length < 3) {
+    setFormMessage(note, 'El nombre debe tener al menos 3 caracteres.', 'error');
+    return false;
+  }
+
+  if (nombre.length > 60) {
+    setFormMessage(note, 'El nombre no debe superar 60 caracteres.', 'error');
+    return false;
+  }
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  if (!emailRegex.test(correo)) {
+    setFormMessage(note, 'Ingresa un correo válido.', 'error');
+    return false;
+  }
+
+  if (!telefonoInput || !telefonoInput.isValidNumber() || !data.telefono) {
+    setFormMessage(note, 'Ingresa un teléfono / WhatsApp válido.', 'error');
+    return false;
+  }
+
+  if (empresa && (empresa.length < 2 || empresa.length > 80)) {
+    setFormMessage(note, 'El nombre de la empresa debe tener entre 2 y 80 caracteres.', 'error');
+    return false;
+  }
+
+  if (!tipoDemo) {
+    setFormMessage(note, 'Debes seleccionar el tipo de demo.', 'error');
+    return false;
+  }
+
+  if (mensaje.length > 500) {
+    setFormMessage(note, 'El mensaje no debe superar 500 caracteres.', 'error');
+    return false;
+  }
+
+  return true;
+}
 
 /* =========================================================
-   4) CAPTURA DE DATOS
+   6) CAPTURA DE DATOS
 ========================================================= */
 function getFormData(form){
   const formData = new FormData(form);
 
+  let telefono = formData.get('telefono') || '';
+  let paisTelefono = '';
+  let indicativoTelefono = '';
+  let codigoPaisTelefono = '';
+
+  if (telefonoInput) {
+    const countryData = telefonoInput.getSelectedCountryData();
+
+    telefono = telefonoInput.getNumber();
+    paisTelefono = countryData.name || '';
+    indicativoTelefono = countryData.dialCode ? `+${countryData.dialCode}` : '';
+    codigoPaisTelefono = countryData.iso2 || '';
+  }
+
   return {
     nombre: formData.get('nombre') || '',
     correo: formData.get('correo') || '',
+    telefono,
+    pais_telefono: paisTelefono,
+    indicativo_telefono: indicativoTelefono,
+    codigo_pais_telefono: codigoPaisTelefono,
     empresa: formData.get('empresa') || '',
     tipo_demo: formData.get('tipo_demo') || '',
     mensaje: formData.get('mensaje') || ''
   };
 }
 
-
 /* =========================================================
-   5) MENSAJES VISUALES
+   7) MENSAJES VISUALES
 ========================================================= */
 function setFormMessage(element, message, type){
 
@@ -185,14 +272,13 @@ function setFormMessage(element, message, type){
   `;
 }
 
-
 /* =========================================================
-   6) MENÚ ACTIVO AUTOMÁTICO
+   8) MENÚ ACTIVO AUTOMÁTICO
 ========================================================= */
 function initActiveMenu(){
 
   const sections = document.querySelectorAll("main section[id]");
-  const navLinks = document.querySelectorAll(".menu a");
+  const navLinks = document.querySelectorAll(".menu a[href^='#']");
 
   function updateActiveMenu(){
 
@@ -220,9 +306,8 @@ function initActiveMenu(){
   updateActiveMenu();
 }
 
-
 /* =========================================================
-   7) SCROLL PROFESIONAL CON OFFSET
+   9) SCROLL PROFESIONAL CON OFFSET
 ========================================================= */
 function initSmoothScroll(){
 
@@ -249,9 +334,8 @@ function initSmoothScroll(){
   });
 }
 
-
 /* =========================================================
-   8) HEADER PREMIUM AL HACER SCROLL
+   10) HEADER PREMIUM AL HACER SCROLL
 ========================================================= */
 function initHeaderScroll(){
 
