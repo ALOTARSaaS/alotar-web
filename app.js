@@ -19,50 +19,62 @@ document.addEventListener('DOMContentLoaded', () => {
 /* =========================================================
    2) FORMULARIO DE CONTACTO
 ========================================================= */
-function initContactForm(){
 
+function initContactForm(){
   const form = document.getElementById('contactForm');
   const note = document.getElementById('formNote');
 
   if (!form || !note) return;
 
-  // 👇 FORZAR lectura del modo
-  setTimeout(() => {
+  applyContactMode();
 
-    const params = new URLSearchParams(window.location.search);
-    const mode = params.get("mode");
-
-    if (mode === "soporte") {
-
-      const contacto = document.getElementById("contacto");
-
-      const title = contacto.querySelector(".section-heading h2");
-      const desc = contacto.querySelector(".section-heading p");
-      const select = form.querySelector('select[name="tipo_demo"]');
-      const textarea = form.querySelector('textarea[name="mensaje"]');
-
-      if (title) {
-        title.innerHTML = 'Solicita <span class="gold-text">soporte</span>';
-      }
-
-      if (desc) {
-        desc.textContent = "Cuéntanos tu problema y te ayudamos a configurar correctamente ALOTAR.";
-      }
-
-      if (select) {
-        select.value = "multi_calendar";
-      }
-
-      if (textarea) {
-        textarea.value = "Necesito ayuda con la configuración del sistema.";
-      }
-    }
-
-  }, 200); // 👈 clave
+  window.addEventListener("hashchange", applyContactMode);
+  window.addEventListener("popstate", applyContactMode);
 
   form.addEventListener('submit', handleContactSubmit);
 }
 
+function applyContactMode(){
+  const params = new URLSearchParams(window.location.search);
+  const mode = params.get("mode");
+
+  const contacto = document.getElementById("contacto");
+  const form = document.getElementById("contactForm");
+
+  if (!contacto || !form) return;
+
+  const title = contacto.querySelector(".section-heading h2");
+  const desc = contacto.querySelector(".section-heading p");
+  const select = form.querySelector('select[name="tipo_demo"]');
+  const textarea = form.querySelector('textarea[name="mensaje"]');
+
+  if (mode === "soporte") {
+    if (title) {
+      title.innerHTML = 'Solicita <span class="gold-text">soporte</span>';
+    }
+
+    if (desc) {
+      desc.textContent = "Cuéntanos tu caso y te ayudamos a configurar correctamente tu sistema ALOTAR.";
+    }
+
+    if (select) {
+      select.value = "multi_calendar";
+    }
+
+    if (textarea && !textarea.value.trim()) {
+      textarea.value = "Necesito ayuda con la configuración del sistema.";
+    }
+
+  } else {
+    if (title) {
+      title.innerHTML = 'Solicita tu <span class="gold-text">demostración</span>';
+    }
+
+    if (desc) {
+      desc.textContent = "Déjanos tus datos y te mostraremos cómo ALOTAR puede transformar la gestión de tus reservas.";
+    }
+  }
+}
 
 /* =========================================================
    3) ENVÍO DEL FORMULARIO
