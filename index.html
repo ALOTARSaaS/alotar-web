@@ -227,7 +227,13 @@
         </label>
 
         <label>Correo
-          <input type="email" name="correo" placeholder="correo@empresa.com" required>
+          <input 
+           type="email" 
+           name="correo" 
+           placeholder="correo@empresa.com" 
+           required
+           pattern="[^\s@]+@[^\s@]+\.[^\s@]+"
+          >
         </label>
 
         <label>Teléfono / WhatsApp
