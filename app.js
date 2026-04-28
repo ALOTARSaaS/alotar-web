@@ -114,7 +114,7 @@ if (!payload.telefono || payload.telefono.length < 7) {
   console.warn("Teléfono inválido detectado en frontend");
   return;
 }
-  
+
 
   if (!validateContactForm(payload, note)) return;
 
@@ -171,25 +171,51 @@ if (!payload.telefono || payload.telefono.length < 7) {
 ========================================================= */
 function validateContactForm(data, note){
   const nombre = String(data.nombre || '').trim();
-  const correo = String(data.correo || '').trim();
+  const correo = String(data.correo || '').trim().toLowerCase();
   const empresa = String(data.empresa || '').trim();
   const tipoDemo = String(data.tipo_demo || '').trim();
   const mensaje = String(data.mensaje || '').trim();
 
-  if (nombre.length < 3) {
-    setFormMessage(note, 'El nombre debe tener al menos 3 caracteres.', 'error');
+  const nameRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]{6,60}$/;
+
+  if (!nameRegex.test(nombre)) {
+    setFormMessage(note, 'Ingresa un nombre válido. Usa solo letras y escribe mínimo nombre y apellido.', 'error');
     return false;
   }
 
-  if (nombre.length > 60) {
-    setFormMessage(note, 'El nombre no debe superar 60 caracteres.', 'error');
+  const partesNombre = nombre.split(/\s+/).filter(Boolean);
+
+  if (partesNombre.length < 2) {
+    setFormMessage(note, 'Por favor ingresa nombre y apellido.', 'error');
     return false;
   }
 
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
   if (!emailRegex.test(correo)) {
-    setFormMessage(note, 'Ingresa un correo válido.', 'error');
+    setFormMessage(note, 'Ingresa un correo electrónico válido.', 'error');
+    return false;
+  }
+
+  const dominio = correo.split('@')[1];
+
+  const dominiosSospechosos = [
+    'gail.com',
+    'gail.co',
+    'gail.cool',
+    'gmial.com',
+    'gmai.com',
+    'gmail.co',
+    'hotmial.com',
+    'hotmai.com',
+    'outlok.com',
+    'outlook.co',
+    'yaho.com',
+    'yahho.com'
+  ];
+
+  if (dominiosSospechosos.includes(dominio)) {
+    setFormMessage(note, 'Parece que el dominio del correo está mal escrito. Revisa si quisiste escribir gmail.com, outlook.com o yahoo.com.', 'error');
     return false;
   }
 
