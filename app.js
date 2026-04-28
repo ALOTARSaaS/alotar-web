@@ -25,33 +25,29 @@ function initContactForm(){
 
   if (!form || !note) return;
 
-  // 👉 Detectar si viene desde Configuración (soporte)
   const params = new URLSearchParams(window.location.search);
-  const type = params.get("type");
+  const mode = params.get("mode");
 
-  if (type === "soporte") {
+  if (mode === "soporte") {
+    const contacto = document.getElementById("contacto");
 
-    // Ajustar título
-    const title = document.querySelector(".section-heading h2");
+    const title = contacto.querySelector(".section-heading h2");
+    const desc = contacto.querySelector(".section-heading p");
+    const select = form.querySelector('select[name="tipo_demo"]');
+    const textarea = form.querySelector('textarea[name="mensaje"]');
+
     if (title) {
       title.innerHTML = 'Solicita <span class="gold-text">soporte</span>';
     }
 
-    // Ajustar descripción
-    const desc = document.querySelector(".section-heading p");
     if (desc) {
-      desc.textContent =
-        "Déjanos tu caso y te ayudamos a configurar correctamente tu sistema ALOTAR.";
+      desc.textContent = "Déjanos tu caso y te ayudamos a configurar correctamente tu sistema ALOTAR.";
     }
 
-    // Prellenar tipo
-    const select = form.querySelector('select[name="tipo_demo"]');
     if (select) {
       select.value = "multi_calendar";
     }
 
-    // Prellenar mensaje
-    const textarea = form.querySelector('textarea[name="mensaje"]');
     if (textarea) {
       textarea.value = "Necesito ayuda con la configuración del sistema.";
     }
