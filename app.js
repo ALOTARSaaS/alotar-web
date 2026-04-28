@@ -190,7 +190,7 @@ function validateContactForm(data, note){
     return false;
   }
 
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,10}$/;
 
   if (!emailRegex.test(correo)) {
     setFormMessage(note, 'Ingresa un correo electrónico válido.', 'error');
@@ -199,7 +199,9 @@ function validateContactForm(data, note){
 
   const dominio = correo.split('@')[1];
 
-  const dominiosSospechosos = [
+  const dominiosInvalidos = [
+    'gil.com',
+    'gil.commm',
     'gail.com',
     'gail.co',
     'gail.cool',
@@ -214,8 +216,18 @@ function validateContactForm(data, note){
     'yahho.com'
   ];
 
-  if (dominiosSospechosos.includes(dominio)) {
-    setFormMessage(note, 'Parece que el dominio del correo está mal escrito. Revisa si quisiste escribir gmail.com, outlook.com o yahoo.com.', 'error');
+  if (dominiosInvalidos.includes(dominio)) {
+    setFormMessage(note, 'El dominio del correo parece estar mal escrito. Revisa si quisiste escribir gmail.com, outlook.com o yahoo.com.', 'error');
+    return false;
+  }
+
+  if (
+    dominio.endsWith('.comm') ||
+    dominio.endsWith('.commm') ||
+    dominio.endsWith('.con') ||
+    dominio.endsWith('.cmo')
+  ) {
+    setFormMessage(note, 'El correo parece tener una extensión incorrecta. Revisa el dominio.', 'error');
     return false;
   }
 
