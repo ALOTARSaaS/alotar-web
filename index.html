@@ -222,54 +222,71 @@
 
       <form id="contactForm" class="contact-form">
 
-        <label>Nombre
-          <input 
-            type="text" 
-            name="nombre" 
-            placeholder="Nombre y apellido" 
-            required 
-            minlength="6" 
-            maxlength="60"
-          >
-        </label>
+  <label>Nombre
+    <input 
+      type="text" 
+      name="nombre" 
+      placeholder="Nombre y apellido" 
+      required 
+      minlength="6" 
+      maxlength="60"
+    >
+  </label>
 
-        <label>Correo
-          <input 
-           type="email" 
-           name="correo" 
-           placeholder="correo@empresa.com" 
-           required
-           pattern="[^\s@]+@[^\s@]+\.[^\s@]+"
-          >
-        </label>
+  <label>Correo
+    <input 
+      type="email" 
+      name="correo" 
+      placeholder="correo@empresa.com" 
+      required
+      pattern="[^\s@]+@[^\s@]+\.[^\s@]+"
+    >
+  </label>
 
-        <label>Teléfono / WhatsApp
-          <input type="tel" id="telefono" name="telefono" placeholder="300 123 4567" required>
-        </label>
+  <label>Teléfono / WhatsApp
+    <input 
+      type="tel" 
+      id="telefono" 
+      name="telefono" 
+      placeholder="300 123 4567" 
+      required
+    >
+  </label>
 
-        <label>Empresa
-          <input type="text" name="empresa" placeholder="Nombre de tu empresa" minlength="2" maxlength="80">
-        </label>
+  <label>Empresa
+    <input 
+      type="text" 
+      name="empresa" 
+      placeholder="Nombre de tu empresa"
+      minlength="2" 
+      maxlength="80"
+    >
+  </label>
 
-        <label>Tipo de demo
-          <select name="tipo_demo" required>
-            <option value="">Selecciona una opción</option>
-            <option value="single_calendar">Un calendario</option>
-            <option value="multi_calendar">Múltiples calendarios, sedes o profesionales</option>
-          </select>
-        </label>
+  <label>Tipo de demo
+    <select name="tipo_demo" required>
+      <option value="">Selecciona una opción</option>
+      <option value="single_calendar">Un calendario</option>
+      <option value="multi_calendar">Múltiples calendarios</option>
+    </select>
+  </label>
 
-        <label>Mensaje
-          <textarea name="mensaje" rows="4" placeholder="Cuéntanos brevemente qué necesitas" maxlength="500"></textarea>
-        </label>
+  <label>Mensaje
+    <textarea 
+      name="mensaje" 
+      rows="4" 
+      placeholder="Cuéntanos qué necesitas"
+      maxlength="500"
+    ></textarea>
+  </label>
 
-        <button type="submit" class="btn btn-primary">
-          Enviar solicitud
-        </button>
+  <button type="submit" class="btn btn-primary">
+    Enviar solicitud
+  </button>
 
-        <p id="formNote" class="form-note"></p>
+  <p id="formNote" class="form-note"></p>
 
-      </form>
+</form>
 
     </div>
   </section>
@@ -308,7 +325,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/intlTelInput.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/utils.js"></script>
-<script src="app.js?v=9"></script>
+<script src="app.js?v=11"></script>
 
 </body>
 </html>
