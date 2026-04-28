@@ -12,7 +12,7 @@ let telefonoInput = null;
 document.addEventListener('DOMContentLoaded', () => {
   initPhoneInput();
   initContactForm();
-  initProgressiveFormValidation(); // 🔥 CLAVE
+  initStepValidation(); // 👈 ESTA LÍNEA ES CLAVE
   initActiveMenu();
   initSmoothScroll();
   initHeaderScroll();
@@ -51,6 +51,12 @@ function initContactForm(){
 
   form.addEventListener('submit', handleContactSubmit);
 }
+
+function initStepValidation(){
+  console.log("🔥 VALIDACIÓN PROGRESIVA ACTIVADA");
+
+  const form = document.getElementById("contactForm");
+  if (!form) return;
 
 /* =========================================================
    4) MODO DEMO / SOPORTE
@@ -238,13 +244,38 @@ function validateContactForm(data, note){
 function getFormData(form){
   const fd = new FormData(form);
 
+  let telefono = '';
+  let paisTelefono = '';
+  let indicativoTelefono = '';
+  let codigoPaisTelefono = '';
+
+  if (telefonoInput) {
+    const countryData = telefonoInput.getSelectedCountryData();
+
+    telefono = telefonoInput.getNumber(
+      intlTelInputUtils.numberFormat.E164
+    );
+
+    paisTelefono = countryData.name || 'No identificado';
+    indicativoTelefono = countryData.dialCode
+      ? `+${countryData.dialCode}`
+      : 'No identificado';
+
+    codigoPaisTelefono = countryData.iso2
+      ? countryData.iso2.toUpperCase()
+      : 'No identificado';
+  }
+
   return {
-    nombre: fd.get('nombre'),
-    correo: fd.get('correo'),
-    telefono: telefonoInput.getNumber(),
-    empresa: fd.get('empresa'),
-    tipo_demo: fd.get('tipo_demo'),
-    mensaje: fd.get('mensaje')
+    nombre: fd.get('nombre') || '',
+    correo: fd.get('correo') || '',
+    telefono: telefono,
+    pais_telefono: paisTelefono,
+    indicativo_telefono: indicativoTelefono,
+    codigo_pais_telefono: codigoPaisTelefono,
+    empresa: fd.get('empresa') || '',
+    tipo_demo: fd.get('tipo_demo') || '',
+    mensaje: fd.get('mensaje') || ''
   };
 }
 
