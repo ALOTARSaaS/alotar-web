@@ -25,6 +25,38 @@ function initContactForm(){
 
   if (!form || !note) return;
 
+  // 👉 Detectar si viene desde Configuración (soporte)
+  const params = new URLSearchParams(window.location.search);
+  const type = params.get("type");
+
+  if (type === "soporte") {
+
+    // Ajustar título
+    const title = document.querySelector(".section-heading h2");
+    if (title) {
+      title.innerHTML = 'Solicita <span class="gold-text">soporte</span>';
+    }
+
+    // Ajustar descripción
+    const desc = document.querySelector(".section-heading p");
+    if (desc) {
+      desc.textContent =
+        "Déjanos tu caso y te ayudamos a configurar correctamente tu sistema ALOTAR.";
+    }
+
+    // Prellenar tipo
+    const select = form.querySelector('select[name="tipo_demo"]');
+    if (select) {
+      select.value = "multi_calendar";
+    }
+
+    // Prellenar mensaje
+    const textarea = form.querySelector('textarea[name="mensaje"]');
+    if (textarea) {
+      textarea.value = "Necesito ayuda con la configuración del sistema.";
+    }
+  }
+
   form.addEventListener('submit', handleContactSubmit);
 }
 
