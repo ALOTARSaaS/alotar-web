@@ -189,17 +189,14 @@ function initProgressiveValidation(){
 
   if (!nombre || !correo || !telefono || !empresa || !tipo || !mensaje) return;
 
-  nombre.addEventListener("input", () => {
+  function resetVerificationState(){
     emailVerified = false;
     resetOtp();
     updateFormState();
-  });
+  }
 
-  correo.addEventListener("input", () => {
-    emailVerified = false;
-    resetOtp();
-    updateFormState();
-  });
+  nombre.addEventListener("input", resetVerificationState);
+  correo.addEventListener("input", resetVerificationState);
 
   telefono.addEventListener("input", updateFormState);
   telefono.addEventListener("countrychange", updateFormState);
