@@ -909,3 +909,41 @@ code{
   }
 }
 
+/* =========================================================
+   ESTADO DISABLED (CRÍTICO)
+========================================================= */
+
+.btn:disabled,
+button:disabled{
+  opacity: .45 !important;
+  cursor: not-allowed !important;
+  pointer-events: none !important;
+  transform: none !important;
+  box-shadow: none !important;
+
+  /* 🔥 mata el efecto dorado activo */
+  background: linear-gradient(180deg, #1e293b, #0f172a) !important;
+  color: #64748b !important;
+  border: 1px solid rgba(148,163,184,.2) !important;
+}
+
+/* Quita glow y animaciones */
+.btn:disabled::before,
+.btn:disabled::after{
+  display: none !important;
+}
+
+/* Evita hover en disabled */
+.btn:disabled:hover{
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* Inputs deshabilitados */
+input:disabled,
+select:disabled,
+textarea:disabled{
+  opacity: .5;
+  cursor: not-allowed;
+  background: #020617;
+}
