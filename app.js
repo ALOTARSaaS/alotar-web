@@ -392,42 +392,41 @@ function isValidName(nombre){
 }
 
 function isValidEmail(email){
+
   const correo = String(email || "").trim().toLowerCase();
 
-  const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,10}$/;
+  // 1. Validación estándar
+  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
   if (!regex.test(correo)) return false;
 
+  // 2. Dominio
   const dominio = correo.split("@")[1];
 
-  const invalidos = [
+  if (!dominio) return false;
+
+  // 3. SOLO errores reales comunes (no agresivo)
+  const errores = [
     "gail.com",
-    "gail.co",
-    "gail.cool",
     "gmial.com",
     "gmai.com",
-    "gmail.co",
-    "gmal.com",
-    "gmaill.com",
-    "fgmi.com",
-    "fgmail.com",
     "hotmial.com",
-    "hotmai.com",
     "outlok.com",
-    "outlook.co",
-    "yaho.com",
-    "yahho.com",
-    "gil.com",
-    "gil.commm"
+    "yaho.com"
   ];
 
-  if (invalidos.includes(dominio)) return false;
+  if (errores.includes(dominio)) return false;
 
-  return !(
+  // 4. Evitar extensiones absurdas
+  if (
     dominio.endsWith(".comm") ||
-    dominio.endsWith(".commm") ||
     dominio.endsWith(".con") ||
     dominio.endsWith(".cmo")
-  );
+  ) {
+    return false;
+  }
+
+  return true;
 }
 
 /* =========================================================
