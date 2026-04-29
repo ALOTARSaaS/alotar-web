@@ -55,23 +55,33 @@ function initOtpFlow(){
 
   if (!sendOtpBtn || !verifyOtpBtn || !otpCode) return;
 
+  // Estado inicial seguro
+  verifyOtpBtn.disabled = true;
+  otpCode.disabled = true;
+  otpCode.value = "";
+
   sendOtpBtn.addEventListener("click", sendOtpCode);
   verifyOtpBtn.addEventListener("click", verifyOtpCode);
 
   otpCode.addEventListener("input", () => {
-    const code = otpCode.value.trim();
+    // 1. Solo números
+    let clean = otpCode.value.replace(/\D/g, "");
 
-    // Solo permite números
-    otpCode.value = code.replace(/\D/g, "");
+    // 2. Máximo 6 dígitos
+    clean = clean.slice(0, 6);
 
-    // Activa el botón solo si son exactamente 6 dígitos
-    verifyOtpBtn.disabled = !/^\d{6}$/.test(otpCode.value);
+    // 3. Reasignar limpio
+    otpCode.value = clean;
+
+    // 4. Activar solo con 6 dígitos exactos
+    verifyOtpBtn.disabled = clean.length !== 6;
   });
 }
 
 async function sendOtpCode(){
   const nombre = document.getElementById("nombre").value.trim();
   const correo = document.getElementById("correo").value.trim().toLowerCase();
+
   const otpNote = document.getElementById("otpNote");
   const otpCode = document.getElementById("otpCode");
   const verifyOtpBtn = document.getElementById("verifyOtpBtn");
@@ -87,13 +97,21 @@ async function sendOtpCode(){
     return;
   }
 
+  // Estado seguro antes de enviar
+  otpCode.value = "";
+  otpCode.disabled = true;
+  otpCode.readOnly = false;
+  verifyOtpBtn.disabled = true;
   sendOtpBtn.disabled = true;
+
   setMsg(otpNote, "Enviando código...", "loading");
 
   try {
     const res = await fetch(API_URL, {
       method: "POST",
-      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8"
+      },
       body: JSON.stringify({
         api_key: API_KEY,
         action: "send_otp",
@@ -107,16 +125,30 @@ async function sendOtpCode(){
     const json = await res.json();
 
     if (json.ok) {
+      // Estado correcto después de enviar OTP
+      otpCode.value = "";
       otpCode.disabled = false;
+      otpCode.readOnly = false;
+
       verifyOtpBtn.disabled = true;
+      sendOtpBtn.disabled = true;
+
       setMsg(otpNote, json.message || "Código enviado. Revisa tu correo.", "ok");
     } else {
+      otpCode.value = "";
+      otpCode.disabled = true;
+      verifyOtpBtn.disabled = true;
       sendOtpBtn.disabled = false;
+
       setMsg(otpNote, json.message || "No fue posible enviar el código.", "error");
     }
 
   } catch (err) {
+    otpCode.value = "";
+    otpCode.disabled = true;
+    verifyOtpBtn.disabled = true;
     sendOtpBtn.disabled = false;
+
     setMsg(otpNote, "Error de conexión al enviar el código.", "error");
   }
 }
