@@ -55,40 +55,26 @@ function applyContactMode(){
 
   if (!contacto || !form) return;
 
+  const eyebrow = contacto.querySelector(".eyebrow");
   const title = contacto.querySelector(".section-heading h2");
-  const desc = contacto.querySelector(".section-heading p");
+  const desc = contacto.querySelector(".section-heading p:not(.eyebrow)");
   const tipo = document.getElementById("tipo_demo");
   const mensaje = document.getElementById("mensaje");
 
   if (mode === "soporte") {
-    if (title) {
-      title.innerHTML = 'Solicita <span class="gold-text">ayuda</span>';
-    }
+    if (eyebrow) eyebrow.textContent = "Soporte";
+    if (title) title.innerHTML = 'Solicita <span class="gold-text">ayuda</span>';
+    if (desc) desc.textContent = "Cuéntanos qué necesitas configurar, corregir o revisar en tu sistema ALOTAR.";
 
-    if (desc) {
-      desc.textContent = "Cuéntanos qué necesitas configurar o corregir en tu sistema ALOTAR.";
-    }
-
-    if (tipo) {
-      tipo.value = "multi_calendar";
-    }
-
-    if (mensaje && !mensaje.value.trim()) {
-      mensaje.placeholder = "Describe el problema o la ayuda que necesitas.";
-    }
+    if (tipo) tipo.value = "multi_calendar";
+    if (mensaje) mensaje.placeholder = "Describe la ayuda que necesitas. Ejemplo: configuración, calendario, logo, sedes u horarios.";
 
   } else {
-    if (title) {
-      title.innerHTML = 'Solicita tu <span class="gold-text">demostración</span>';
-    }
+    if (eyebrow) eyebrow.textContent = "Contacto";
+    if (title) title.innerHTML = 'Solicita tu <span class="gold-text">demostración</span>';
+    if (desc) desc.textContent = "Déjanos tus datos y te mostraremos cómo ALOTAR puede transformar la gestión de tus reservas.";
 
-    if (desc) {
-      desc.textContent = "Déjanos tus datos y te mostraremos cómo ALOTAR puede transformar la gestión de tus reservas.";
-    }
-
-    if (mensaje) {
-      mensaje.placeholder = "Cuéntanos brevemente qué necesitas";
-    }
+    if (mensaje) mensaje.placeholder = "Cuéntanos brevemente qué necesitas";
   }
 
   updateFormState();
