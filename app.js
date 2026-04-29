@@ -1,25 +1,25 @@
 /* =========================================================
-   ALOTAR FRONTEND SCRIPT
+   ALOTAR FRONTEND SCRIPT + OTP
 ========================================================= */
 
 const API_URL = "https://script.google.com/macros/s/AKfycbyPlboReKGoAbs33kt9jw-jO7BLD1-9RFd5Tjx_le4lss-KXHRcd84dE9zU3QWoesE/exec";
+const API_KEY = "ALOTAR_SECURE_2026";
 
 let telefonoInput = null;
+let emailVerified = false;
 
 /* =========================================================
-   1) INICIALIZACIÓN
+   INIT
 ========================================================= */
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
   initPhoneInput();
   initContactForm();
-  initStepValidation(); // 👈 ESTA LÍNEA ES CLAVE
-  initActiveMenu();
-  initSmoothScroll();
-  initHeaderScroll();
+  initOtpFlow();
+  initProgressiveValidation();
 });
 
 /* =========================================================
-   2) TELÉFONO INTERNACIONAL
+   TELÉFONO INTERNACIONAL
 ========================================================= */
 function initPhoneInput(){
   const input = document.querySelector("#telefono");
@@ -36,261 +36,432 @@ function initPhoneInput(){
 }
 
 /* =========================================================
-   3) FORMULARIO
+   FORMULARIO
 ========================================================= */
 function initContactForm(){
-  const form = document.getElementById('contactForm');
-  const note = document.getElementById('formNote');
-
-  if (!form || !note) return;
-
-  applyContactMode();
-
-  window.addEventListener("hashchange", applyContactMode);
-  window.addEventListener("popstate", applyContactMode);
-
-  form.addEventListener('submit', handleContactSubmit);
-}
-
-function initStepValidation(){
-  console.log("🔥 VALIDACIÓN PROGRESIVA ACTIVADA");
-
   const form = document.getElementById("contactForm");
   if (!form) return;
 
-/* =========================================================
-   4) MODO DEMO / SOPORTE
-========================================================= */
-function applyContactMode(){
-  const params = new URLSearchParams(window.location.search);
-  const mode = params.get("mode");
-
-  const contacto = document.getElementById("contacto");
-  const form = document.getElementById("contactForm");
-
-  if (!contacto || !form) return;
-
-  const title = contacto.querySelector("h2");
-  const desc = contacto.querySelector(".section-heading p");
-  const select = form.querySelector('select[name="tipo_demo"]');
-  const textarea = form.querySelector('textarea[name="mensaje"]');
-
-  if (mode === "soporte") {
-    title.innerHTML = 'Solicita <span class="gold-text">soporte</span>';
-    desc.textContent = "Cuéntanos tu caso y te ayudamos a configurar correctamente tu sistema.";
-    if (select) select.value = "multi_calendar";
-    if (textarea && !textarea.value.trim()) {
-      textarea.value = "Necesito ayuda con la configuración.";
-    }
-  }
+  form.addEventListener("submit", handleSubmit);
 }
 
 /* =========================================================
-   5) VALIDACIÓN PROGRESIVA 🔥
+   OTP
 ========================================================= */
-function initProgressiveFormValidation(){
+function initOtpFlow(){
+  const sendOtpBtn = document.getElementById("sendOtpBtn");
+  const verifyOtpBtn = document.getElementById("verifyOtpBtn");
+  const otpCode = document.getElementById("otpCode");
 
-  const nombre = document.querySelector('[name="nombre"]');
-  const correo = document.querySelector('[name="correo"]');
-  const telefono = document.querySelector('[name="telefono"]');
-  const empresa = document.querySelector('[name="empresa"]');
-  const tipoDemo = document.querySelector('[name="tipo_demo"]');
-  const mensaje = document.querySelector('[name="mensaje"]');
-  const submitBtn = document.querySelector('#contactForm button[type="submit"]');
+  if (!sendOtpBtn || !verifyOtpBtn || !otpCode) return;
 
-  if (!nombre) return;
+  sendOtpBtn.addEventListener("click", sendOtpCode);
+  verifyOtpBtn.addEventListener("click", verifyOtpCode);
 
-  correo.disabled = true;
-  telefono.disabled = true;
-  empresa.disabled = true;
-  tipoDemo.disabled = true;
-  mensaje.disabled = true;
-  submitBtn.disabled = true;
-
-  function validarNombre(){
-    const v = nombre.value.trim();
-    const partes = v.split(" ");
-    return v.length >= 6 && partes.length >= 2;
-  }
-
-  function validarCorreo(){
-    return correo.value.includes("@") && correo.value.includes(".");
-  }
-
-  function validarTelefono(){
-    return telefonoInput && telefonoInput.isValidNumber();
-  }
-
-  function validarTipo(){
-    return tipoDemo.value !== "";
-  }
-
-  function update(){
-
-    const n = validarNombre();
-    correo.disabled = !n;
-
-    if (!n) return reset();
-
-    const c = validarCorreo();
-    telefono.disabled = !c;
-
-    if (!c) return;
-
-    const t = validarTelefono();
-    empresa.disabled = !t;
-
-    if (!t) return;
-
-    tipoDemo.disabled = false;
-
-    if (!validarTipo()) {
-      mensaje.disabled = true;
-      submitBtn.disabled = true;
-      return;
-    }
-
-    mensaje.disabled = false;
-    submitBtn.disabled = false;
-  }
-
-  function reset(){
-    correo.value = "";
-    telefono.value = "";
-    empresa.value = "";
-    tipoDemo.value = "";
-    mensaje.value = "";
-
-    telefono.disabled = true;
-    empresa.disabled = true;
-    tipoDemo.disabled = true;
-    mensaje.disabled = true;
-    submitBtn.disabled = true;
-  }
-
-  nombre.addEventListener("input", update);
-  correo.addEventListener("input", update);
-  telefono.addEventListener("input", update);
-  tipoDemo.addEventListener("change", update);
-
-  update();
+  otpCode.addEventListener("input", () => {
+    verifyOtpBtn.disabled = otpCode.value.trim().length !== 6;
+  });
 }
 
-/* =========================================================
-   6) ENVÍO
-========================================================= */
-async function handleContactSubmit(event){
-  event.preventDefault();
+async function sendOtpCode(){
+  const nombre = document.getElementById("nombre").value.trim();
+  const correo = document.getElementById("correo").value.trim().toLowerCase();
+  const otpNote = document.getElementById("otpNote");
+  const otpCode = document.getElementById("otpCode");
+  const verifyOtpBtn = document.getElementById("verifyOtpBtn");
+  const sendOtpBtn = document.getElementById("sendOtpBtn");
 
-  const form = event.target;
-  const note = document.getElementById('formNote');
-  const payload = getFormData(form);
+  if (!isValidName(nombre)) {
+    setMsg(otpNote, "Ingresa nombre y apellido antes de verificar el correo.", "error");
+    return;
+  }
 
-  if (!validateContactForm(payload, note)) return;
+  if (!isValidEmail(correo)) {
+    setMsg(otpNote, "Ingresa un correo válido antes de solicitar el código.", "error");
+    return;
+  }
 
-  setFormMessage(note, 'Enviando...', 'loading');
+  sendOtpBtn.disabled = true;
+  setMsg(otpNote, "Enviando código...", "loading");
 
   try {
-    const response = await fetch(API_URL, {
+    const res = await fetch(API_URL, {
       method: "POST",
-      headers: { "Content-Type": "text/plain" },
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
       body: JSON.stringify({
-        api_key: "ALOTAR_SECURE_2026",
-        action: "contact",
-        data: payload
+        api_key: API_KEY,
+        action: "send_otp",
+        data: {
+          nombre,
+          correo
+        }
       })
     });
 
-    const result = await response.json();
+    const json = await res.json();
 
-    if (result.ok) {
-      setFormMessage(note, 'Enviado correctamente', 'ok');
-      form.reset();
+    if (json.ok) {
+      otpCode.disabled = false;
+      verifyOtpBtn.disabled = true;
+      setMsg(otpNote, json.message || "Código enviado. Revisa tu correo.", "ok");
     } else {
-      setFormMessage(note, result.message, 'error');
+      sendOtpBtn.disabled = false;
+      setMsg(otpNote, json.message || "No fue posible enviar el código.", "error");
     }
 
-  } catch (e) {
-    setFormMessage(note, 'Error de conexión', 'error');
+  } catch (err) {
+    sendOtpBtn.disabled = false;
+    setMsg(otpNote, "Error de conexión al enviar el código.", "error");
+  }
+}
+
+async function verifyOtpCode(){
+  const correo = document.getElementById("correo").value.trim().toLowerCase();
+  const otp = document.getElementById("otpCode").value.trim();
+  const otpNote = document.getElementById("otpNote");
+  const verifyOtpBtn = document.getElementById("verifyOtpBtn");
+  const sendOtpBtn = document.getElementById("sendOtpBtn");
+
+  if (!otp || otp.length !== 6) {
+    setMsg(otpNote, "Ingresa el código de 6 dígitos.", "error");
+    return;
+  }
+
+  verifyOtpBtn.disabled = true;
+  setMsg(otpNote, "Verificando código...", "loading");
+
+  try {
+    const res = await fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify({
+        api_key: API_KEY,
+        action: "verify_otp",
+        data: {
+          correo,
+          otp
+        }
+      })
+    });
+
+    const json = await res.json();
+
+    if (json.ok) {
+      emailVerified = true;
+
+      document.getElementById("correo").readOnly = true;
+      document.getElementById("otpCode").readOnly = true;
+
+      sendOtpBtn.disabled = true;
+      verifyOtpBtn.disabled = true;
+
+      setMsg(otpNote, "✅ Correo verificado correctamente.", "ok");
+
+      updateFormState();
+
+    } else {
+      verifyOtpBtn.disabled = false;
+      setMsg(otpNote, json.message || "Código incorrecto.", "error");
+    }
+
+  } catch (err) {
+    verifyOtpBtn.disabled = false;
+    setMsg(otpNote, "Error de conexión al verificar el código.", "error");
   }
 }
 
 /* =========================================================
-   7) VALIDACIÓN FINAL
+   VALIDACIÓN PROGRESIVA
 ========================================================= */
-function validateContactForm(data, note){
+function initProgressiveValidation(){
+  const nombre = document.getElementById("nombre");
+  const correo = document.getElementById("correo");
+  const telefono = document.getElementById("telefono");
+  const empresa = document.getElementById("empresa");
+  const tipo = document.getElementById("tipo_demo");
+  const mensaje = document.getElementById("mensaje");
 
-  if (!data.nombre || data.nombre.length < 6) {
-    setFormMessage(note, 'Nombre inválido', 'error');
-    return false;
+  if (!nombre || !correo || !telefono || !empresa || !tipo || !mensaje) return;
+
+  nombre.addEventListener("input", () => {
+    emailVerified = false;
+    resetOtp();
+    updateFormState();
+  });
+
+  correo.addEventListener("input", () => {
+    emailVerified = false;
+    resetOtp();
+    updateFormState();
+  });
+
+  telefono.addEventListener("input", updateFormState);
+  telefono.addEventListener("countrychange", updateFormState);
+  empresa.addEventListener("input", updateFormState);
+  tipo.addEventListener("change", updateFormState);
+  mensaje.addEventListener("input", updateFormState);
+
+  updateFormState();
+}
+
+function updateFormState(){
+  const nombre = document.getElementById("nombre");
+  const correo = document.getElementById("correo");
+  const telefono = document.getElementById("telefono");
+  const empresa = document.getElementById("empresa");
+  const tipo = document.getElementById("tipo_demo");
+  const mensaje = document.getElementById("mensaje");
+  const submitBtn = document.getElementById("submitBtn");
+  const sendOtpBtn = document.getElementById("sendOtpBtn");
+
+  const nombreOk = isValidName(nombre.value);
+  const correoOk = isValidEmail(correo.value);
+
+  correo.disabled = !nombreOk;
+
+  if (sendOtpBtn) {
+    sendOtpBtn.disabled = !(nombreOk && correoOk) || emailVerified;
   }
 
-  if (!data.correo.includes("@")) {
-    setFormMessage(note, 'Correo inválido', 'error');
-    return false;
+  telefono.disabled = !emailVerified;
+
+  if (!emailVerified) {
+    empresa.disabled = true;
+    tipo.disabled = true;
+    mensaje.disabled = true;
+    submitBtn.disabled = true;
+    return;
   }
 
-  if (!telefonoInput.isValidNumber()) {
-    setFormMessage(note, 'Teléfono inválido', 'error');
-    return false;
+  const telefonoOk = telefonoInput && telefonoInput.isValidNumber();
+
+  empresa.disabled = !telefonoOk;
+  tipo.disabled = !telefonoOk;
+
+  const tipoOk = Boolean(tipo.value);
+
+  mensaje.disabled = !(telefonoOk && tipoOk);
+  submitBtn.disabled = !(telefonoOk && tipoOk);
+}
+
+function resetOtp(){
+  const otpCode = document.getElementById("otpCode");
+  const verifyOtpBtn = document.getElementById("verifyOtpBtn");
+  const otpNote = document.getElementById("otpNote");
+
+  if (otpCode) {
+    otpCode.value = "";
+    otpCode.disabled = true;
+    otpCode.readOnly = false;
+  }
+
+  if (verifyOtpBtn) {
+    verifyOtpBtn.disabled = true;
+  }
+
+  if (otpNote) {
+    otpNote.innerHTML = "";
+  }
+}
+
+/* =========================================================
+   SUBMIT
+========================================================= */
+async function handleSubmit(e){
+  e.preventDefault();
+
+  const note = document.getElementById("formNote");
+  const data = getFormData(e.target);
+
+  if (!validateFinal(data, note)) return;
+
+  setMsg(note, "Enviando solicitud...", "loading");
+
+  try {
+    const res = await fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify({
+        api_key: API_KEY,
+        action: "contact",
+        data
+      })
+    });
+
+    const json = await res.json();
+
+    if (json.ok) {
+      setMsg(note, "✅ Solicitud enviada correctamente.", "ok");
+      e.target.reset();
+
+      emailVerified = false;
+
+      if (telefonoInput) {
+        telefonoInput.setCountry("co");
+      }
+
+      resetOtp();
+      updateFormState();
+
+    } else {
+      setMsg(note, json.message || "No fue posible enviar la solicitud.", "error");
+    }
+
+  } catch (err) {
+    setMsg(note, "Error de conexión con el servidor.", "error");
+  }
+}
+
+/* =========================================================
+   VALIDACIÓN FINAL
+========================================================= */
+function validateFinal(data, note){
+  if (!isValidName(data.nombre)) {
+    return error(note, "Ingresa un nombre válido con nombre y apellido.");
+  }
+
+  if (!isValidEmail(data.correo)) {
+    return error(note, "Ingresa un correo válido.");
+  }
+
+  if (!emailVerified) {
+    return error(note, "Debes verificar tu correo antes de enviar la solicitud.");
+  }
+
+  if (!telefonoInput || !telefonoInput.isValidNumber()) {
+    return error(note, "Ingresa un teléfono / WhatsApp válido.");
+  }
+
+  if (!data.tipo_demo) {
+    return error(note, "Selecciona el tipo de demo.");
   }
 
   return true;
 }
 
+function error(note, msg){
+  setMsg(note, msg, "error");
+  return false;
+}
+
 /* =========================================================
-   8) DATA
+   DATA
 ========================================================= */
 function getFormData(form){
   const fd = new FormData(form);
 
-  let telefono = '';
-  let paisTelefono = '';
-  let indicativoTelefono = '';
-  let codigoPaisTelefono = '';
+  let telefono = "";
+  let paisTelefono = "";
+  let indicativoTelefono = "";
+  let codigoPaisTelefono = "";
 
-  if (telefonoInput) {
-    const countryData = telefonoInput.getSelectedCountryData();
+  if (telefonoInput && window.intlTelInputUtils) {
+    const c = telefonoInput.getSelectedCountryData();
 
     telefono = telefonoInput.getNumber(
       intlTelInputUtils.numberFormat.E164
     );
 
-    paisTelefono = countryData.name || 'No identificado';
-    indicativoTelefono = countryData.dialCode
-      ? `+${countryData.dialCode}`
-      : 'No identificado';
-
-    codigoPaisTelefono = countryData.iso2
-      ? countryData.iso2.toUpperCase()
-      : 'No identificado';
+    paisTelefono = c.name || "No identificado";
+    indicativoTelefono = c.dialCode ? `+${c.dialCode}` : "No identificado";
+    codigoPaisTelefono = c.iso2 ? c.iso2.toUpperCase() : "No identificado";
   }
 
   return {
-    nombre: fd.get('nombre') || '',
-    correo: fd.get('correo') || '',
-    telefono: telefono,
+    nombre: fd.get("nombre") || "",
+    correo: String(fd.get("correo") || "").trim().toLowerCase(),
+    telefono,
     pais_telefono: paisTelefono,
     indicativo_telefono: indicativoTelefono,
     codigo_pais_telefono: codigoPaisTelefono,
-    empresa: fd.get('empresa') || '',
-    tipo_demo: fd.get('tipo_demo') || '',
-    mensaje: fd.get('mensaje') || ''
+    empresa: fd.get("empresa") || "",
+    tipo_demo: fd.get("tipo_demo") || "",
+    mensaje: fd.get("mensaje") || ""
   };
 }
 
 /* =========================================================
-   9) MENSAJES
+   VALIDADORES
 ========================================================= */
-function setFormMessage(el, msg, type){
-  el.innerHTML = `<div>${msg}</div>`;
+function isValidName(nombre){
+  const value = String(nombre || "").trim();
+  const regex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]{6,60}$/;
+  const parts = value.split(/\s+/).filter(Boolean);
+
+  return regex.test(value) && parts.length >= 2;
+}
+
+function isValidEmail(email){
+  const correo = String(email || "").trim().toLowerCase();
+
+  const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,10}$/;
+  if (!regex.test(correo)) return false;
+
+  const dominio = correo.split("@")[1];
+
+  const invalidos = [
+    "gail.com",
+    "gail.co",
+    "gail.cool",
+    "gmial.com",
+    "gmai.com",
+    "gmail.co",
+    "gmal.com",
+    "gmaill.com",
+    "fgmi.com",
+    "fgmail.com",
+    "hotmial.com",
+    "hotmai.com",
+    "outlok.com",
+    "outlook.co",
+    "yaho.com",
+    "yahho.com",
+    "gil.com",
+    "gil.commm"
+  ];
+
+  if (invalidos.includes(dominio)) return false;
+
+  return !(
+    dominio.endsWith(".comm") ||
+    dominio.endsWith(".commm") ||
+    dominio.endsWith(".con") ||
+    dominio.endsWith(".cmo")
+  );
 }
 
 /* =========================================================
-   10) UI
+   MENSAJES
 ========================================================= */
-function initActiveMenu(){}
-function initSmoothScroll(){}
-function initHeaderScroll(){}
+function setMsg(el, msg, type){
+  if (!el) return;
 
+  let bg = "linear-gradient(135deg, rgba(245,180,40,.15), rgba(255,255,255,.05))";
+  let border = "1px solid rgba(212,160,23,.4)";
+
+  if (type === "ok") {
+    bg = "linear-gradient(135deg, rgba(34,197,94,.15), rgba(255,255,255,.05))";
+    border = "1px solid rgba(34,197,94,.4)";
+  }
+
+  if (type === "error") {
+    bg = "linear-gradient(135deg, rgba(248,113,113,.15), rgba(255,255,255,.05))";
+    border = "1px solid rgba(248,113,113,.4)";
+  }
+
+  el.innerHTML = `
+    <div style="
+      margin-top:10px;
+      padding:14px;
+      border-radius:12px;
+      background:${bg};
+      border:${border};
+      color:#e5e7eb;
+      font-size:14px;
+      line-height:1.5;
+    ">
+      ${msg}
+    </div>
+  `;
+}
 

@@ -222,71 +222,117 @@
 
       <form id="contactForm" class="contact-form">
 
-  <label>Nombre
-    <input 
-      type="text" 
-      name="nombre" 
-      placeholder="Nombre y apellido" 
-      required 
-      minlength="6" 
-      maxlength="60"
-    >
-  </label>
+        <label>Nombre
+          <input 
+            id="nombre"
+            type="text" 
+            name="nombre" 
+            placeholder="Nombre y apellido" 
+            required 
+            minlength="6" 
+            maxlength="60"
+            autocomplete="name"
+          >
+        </label>
 
-  <label>Correo
-    <input 
-      type="email" 
-      name="correo" 
-      placeholder="correo@empresa.com" 
-      required
-      pattern="[^\s@]+@[^\s@]+\.[^\s@]+"
-    >
-  </label>
+        <label>Correo
+          <input 
+            id="correo"
+            type="email" 
+            name="correo" 
+            placeholder="correo@empresa.com" 
+            required
+            autocomplete="email"
+            pattern="[^\s@]+@[^\s@]+\.[^\s@]+"
+          >
+        </label>
 
-  <label>Teléfono / WhatsApp
-    <input 
-      type="tel" 
-      id="telefono" 
-      name="telefono" 
-      placeholder="300 123 4567" 
-      required
-    >
-  </label>
+        <!-- OTP CORREO -->
+        <div id="otpBox" class="otp-box">
+          <button 
+            id="sendOtpBtn" 
+            type="button" 
+            class="btn btn-outline"
+          >
+            Enviar código de verificación
+          </button>
 
-  <label>Empresa
-    <input 
-      type="text" 
-      name="empresa" 
-      placeholder="Nombre de tu empresa"
-      minlength="2" 
-      maxlength="80"
-    >
-  </label>
+          <label>Código de verificación
+            <input
+              id="otpCode"
+              type="text"
+              name="otp_code"
+              placeholder="Código de 6 dígitos"
+              inputmode="numeric"
+              maxlength="6"
+              autocomplete="one-time-code"
+              disabled
+            >
+          </label>
 
-  <label>Tipo de demo
-    <select name="tipo_demo" required>
-      <option value="">Selecciona una opción</option>
-      <option value="single_calendar">Un calendario</option>
-      <option value="multi_calendar">Múltiples calendarios</option>
-    </select>
-  </label>
+          <button 
+            id="verifyOtpBtn" 
+            type="button" 
+            class="btn btn-primary"
+            disabled
+          >
+            Verificar correo
+          </button>
 
-  <label>Mensaje
-    <textarea 
-      name="mensaje" 
-      rows="4" 
-      placeholder="Cuéntanos qué necesitas"
-      maxlength="500"
-    ></textarea>
-  </label>
+          <p id="otpNote" class="form-note"></p>
+        </div>
 
-  <button type="submit" class="btn btn-primary">
-    Enviar solicitud
-  </button>
+        <label>Teléfono / WhatsApp
+          <input 
+            id="telefono"
+            type="tel" 
+            name="telefono" 
+            placeholder="300 123 4567" 
+            required
+            autocomplete="tel"
+            disabled
+          >
+        </label>
 
-  <p id="formNote" class="form-note"></p>
+        <label>Empresa
+          <input 
+            id="empresa"
+            type="text" 
+            name="empresa" 
+            placeholder="Nombre de tu empresa"
+            minlength="2" 
+            maxlength="80"
+            autocomplete="organization"
+            disabled
+          >
+        </label>
 
-</form>
+        <label>Tipo de demo
+          <select id="tipo_demo" name="tipo_demo" required disabled>
+            <option value="">Selecciona una opción</option>
+            <option value="single_calendar">Un calendario</option>
+            <option value="multi_calendar">Múltiples calendarios, sedes o profesionales</option>
+          </select>
+        </label>
+
+        <label>Mensaje
+          <textarea 
+            id="mensaje"
+            name="mensaje" 
+            rows="4" 
+            placeholder="Cuéntanos brevemente qué necesitas" 
+            maxlength="500"
+            disabled
+          ></textarea>
+        </label>
+
+        <button id="submitBtn" type="submit" class="btn btn-primary" disabled>
+          Enviar solicitud
+        </button>
+
+        <p id="formNote" class="form-note"></p>
+
+      </form>
 
     </div>
   </section>
@@ -307,7 +353,7 @@
 
     <div class="footer-meta">
       <a href="mailto:info@alotar.com">info@alotar.com</a>
-      <a href="index.html#contacto">Solicitar demo</a>
+      <a class="js-demo-contact" href="index.html#contacto">Solicitar demo</a>
       <span>© 2026 · All rights reserved</span>
     </div>
 
@@ -325,7 +371,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/intlTelInput.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/utils.js"></script>
-<script src="app.js?v=12"></script>
+<script src="app.js?v=17"></script>
 
 </body>
 </html>
