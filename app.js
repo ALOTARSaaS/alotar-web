@@ -272,8 +272,10 @@ function updateFormState(){
 
   const tipoOk = Boolean(tipo.value);
 
-  const mensajeOk = mensaje.value.trim().length <= 500;
-
+  const mensajeOk = 
+    mensaje.value.trim().length >= 10; &&
+    mensaje.value.trim().length <= 500;
+    
   correo.disabled = !nombreOk;
 
   if (sendOtpBtn) {
