@@ -60,29 +60,106 @@
     <div class="cards one">
 
       <article class="card">
-        <h3>🔐 Calendar ID obligatorio</h3>
+  <h3>🔐 Calendar ID obligatorio</h3>
 
-        <p>
-          Este es el calendario donde se guardarán las reservas del cliente.
-        </p>
+  <p>
+    El <strong>Calendar ID</strong> identifica el calendario donde ALOTAR guardará las reservas.
+    Recomendamos usar un calendario exclusivo para reservas y no mezclarlo con calendarios personales.
+  </p>
 
-        <ol>
-          <li>Abre Google Calendar.</li>
-          <li>Selecciona el calendario que se usará para las reservas.</li>
-          <li>Entra a <strong>Configuración</strong>.</li>
-          <li>Busca la sección <strong>Integrar calendario</strong>.</li>
-          <li>Copia el <strong>ID del calendario</strong>.</li>
-        </ol>
+  <h3>1. Crea un calendario exclusivo para reservas</h3>
 
-        <p>Ejemplo:</p>
+  <ol>
+    <li>Abre <strong>Google Calendar</strong>.</li>
+    <li>En el menú izquierdo busca <strong>Otros calendarios</strong>.</li>
+    <li>Haz clic en el botón <strong>+</strong>.</li>
+    <li>Selecciona <strong>Crear calendario nuevo</strong>.</li>
+    <li>Escribe un nombre claro, por ejemplo: <strong>Reservas ALOTAR</strong>.</li>
+    <li>Haz clic en <strong>Crear calendario</strong>.</li>
+  </ol>
 
-        <code>abc123@group.calendar.google.com</code>
+  <p class="good">
+    ✔ Esto evita mezclar reservas con eventos personales o internos.
+  </p>
 
-        <p class="bad">⚠️ Error común: copiar el nombre del calendario en vez del Calendar ID.</p>
-        <p class="bad">⚠️ Error común: no compartir el calendario con permisos de edición.</p>
+  <h3>2. Entra a la configuración del calendario</h3>
 
-        <p class="good">✔ El calendario debe estar compartido correctamente para que ALOTAR pueda crear reservas.</p>
-      </article>
+  <ol>
+    <li>Ubica el calendario que usarás para reservas.</li>
+    <li>Pasa el mouse sobre el nombre del calendario.</li>
+    <li>Haz clic en los tres puntos <strong>⋮</strong>.</li>
+    <li>Selecciona <strong>Configuración y uso compartido</strong>.</li>
+  </ol>
+
+  <h3>3. Copia el Calendar ID</h3>
+
+  <p>
+    Baja hasta la sección <strong>Integrar calendario</strong> y copia el campo
+    llamado <strong>ID del calendario</strong>.
+  </p>
+
+  <p>Ejemplo correcto:</p>
+
+  <code>abc123@group.calendar.google.com</code>
+
+  <p class="bad">
+    ⚠️ Error común: copiar el nombre del calendario en vez del Calendar ID.
+  </p>
+
+  <p class="good">
+    ✔ El Calendar ID normalmente termina en <strong>@group.calendar.google.com</strong>.
+  </p>
+
+  <h3>4. Comparte el calendario con permisos de edición</h3>
+
+  <p>
+    Para que ALOTAR pueda crear reservas automáticamente, el calendario debe compartirse
+    con la cuenta indicada por tu asesor o administrador.
+  </p>
+
+  <ol>
+    <li>En la configuración del calendario busca <strong>Compartir con personas o grupos específicos</strong>.</li>
+    <li>Haz clic en <strong>Agregar personas o grupos</strong>.</li>
+    <li>Escribe el correo que te indique ALOTAR.</li>
+    <li>En permisos selecciona <strong>Realizar cambios en eventos</strong>.</li>
+    <li>Haz clic en <strong>Enviar</strong>.</li>
+  </ol>
+
+  <p class="bad">
+    ⚠️ Si el calendario no tiene permisos de edición, el sistema no podrá guardar reservas.
+  </p>
+
+  <p class="good">
+    ✔ Permiso recomendado: <strong>Realizar cambios en eventos</strong>.
+  </p>
+
+  <h3>5. Pega el Calendar ID en ALOTAR</h3>
+
+  <p>
+    Copia y pega el ID exactamente como aparece en Google Calendar.
+    No agregues espacios, comillas ni texto adicional.
+  </p>
+
+  <p class="good">
+    ✔ Correcto: abc123@group.calendar.google.com
+  </p>
+
+  <p class="bad">
+    ✘ Incorrecto: Reservas ALOTAR
+  </p>
+
+  <h3>6. Haz una prueba final</h3>
+
+  <p>
+    Después de guardar la configuración, crea una reserva de prueba y verifica
+    que el evento aparezca en Google Calendar.
+  </p>
+
+  <ul>
+    <li>Si el evento aparece, la configuración está correcta.</li>
+    <li>Si no aparece, revisa el Calendar ID y los permisos.</li>
+  </ul>
+</article>
 
       <article class="card">
         <h3>🖼 Logo FILE ID</h3>
@@ -395,7 +472,7 @@ function logoPreviewError(){
 }
 </script>
 
-<script src="app.js?v=24"></script>
+<script src="app.js?v=25"></script>
 
 </body>
 </html>
