@@ -204,6 +204,18 @@ function initProgressiveValidation(){
   tipo.addEventListener("change", updateFormState);
   mensaje.addEventListener("input", updateFormState);
 
+  emailVerified = false;
+
+  document.getElementById("sendOtpBtn").disabled = true;
+  document.getElementById("verifyOtpBtn").disabled = true;
+  document.getElementById("submitBtn").disabled = true;
+
+  correo.disabled = true;
+  telefono.disabled = true;
+  empresa.disabled = true;
+  tipo.disabled = true;
+  mensaje.disabled = true;
+
   updateFormState();
 }
 
