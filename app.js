@@ -16,6 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initContactForm();
   initOtpFlow();
   initProgressiveValidation();
+  applyContactMode();
 });
 
 /* =========================================================
@@ -43,6 +44,54 @@ function initContactForm(){
   if (!form) return;
 
   form.addEventListener("submit", handleSubmit);
+}
+
+function applyContactMode(){
+  const params = new URLSearchParams(window.location.search);
+  const mode = params.get("mode");
+
+  const contacto = document.getElementById("contacto");
+  const form = document.getElementById("contactForm");
+
+  if (!contacto || !form) return;
+
+  const title = contacto.querySelector(".section-heading h2");
+  const desc = contacto.querySelector(".section-heading p");
+  const tipo = document.getElementById("tipo_demo");
+  const mensaje = document.getElementById("mensaje");
+
+  if (mode === "soporte") {
+    if (title) {
+      title.innerHTML = 'Solicita <span class="gold-text">ayuda</span>';
+    }
+
+    if (desc) {
+      desc.textContent = "Cuéntanos qué necesitas configurar o corregir en tu sistema ALOTAR.";
+    }
+
+    if (tipo) {
+      tipo.value = "multi_calendar";
+    }
+
+    if (mensaje && !mensaje.value.trim()) {
+      mensaje.placeholder = "Describe el problema o la ayuda que necesitas.";
+    }
+
+  } else {
+    if (title) {
+      title.innerHTML = 'Solicita tu <span class="gold-text">demostración</span>';
+    }
+
+    if (desc) {
+      desc.textContent = "Déjanos tus datos y te mostraremos cómo ALOTAR puede transformar la gestión de tus reservas.";
+    }
+
+    if (mensaje) {
+      mensaje.placeholder = "Cuéntanos brevemente qué necesitas";
+    }
+  }
+
+  updateFormState();
 }
 
 /* =========================================================
