@@ -59,7 +59,13 @@ function initOtpFlow(){
   verifyOtpBtn.addEventListener("click", verifyOtpCode);
 
   otpCode.addEventListener("input", () => {
-    verifyOtpBtn.disabled = otpCode.value.trim().length !== 6;
+    const code = otpCode.value.trim();
+
+    // Solo permite números
+    otpCode.value = code.replace(/\D/g, "");
+
+    // Activa el botón solo si son exactamente 6 dígitos
+    verifyOtpBtn.disabled = !/^\d{6}$/.test(otpCode.value);
   });
 }
 
@@ -217,6 +223,16 @@ function updateFormState(){
   const nombreOk = isValidName(nombre.value);
   const correoOk = isValidEmail(correo.value);
 
+  const telefonoOk = telefonoInput && telefonoInput.isValidNumber();
+
+  const empresaOk =
+    !empresa.value.trim() ||
+    (empresa.value.trim().length >= 2 && empresa.value.trim().length <= 80);
+
+  const tipoOk = Boolean(tipo.value);
+
+  const mensajeOk = mensaje.value.trim().length <= 500;
+
   correo.disabled = !nombreOk;
 
   if (sendOtpBtn) {
@@ -233,15 +249,20 @@ function updateFormState(){
     return;
   }
 
-  const telefonoOk = telefonoInput && telefonoInput.isValidNumber();
-
   empresa.disabled = !telefonoOk;
   tipo.disabled = !telefonoOk;
 
-  const tipoOk = Boolean(tipo.value);
+  mensaje.disabled = !(telefonoOk && empresaOk && tipoOk);
 
-  mensaje.disabled = !(telefonoOk && tipoOk);
-  submitBtn.disabled = !(telefonoOk && tipoOk);
+  submitBtn.disabled = !(
+    nombreOk &&
+    correoOk &&
+    emailVerified &&
+    telefonoOk &&
+    empresaOk &&
+    tipoOk &&
+    mensajeOk
+  );
 }
 
 function resetOtp(){
