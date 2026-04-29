@@ -252,12 +252,14 @@ function initProgressiveValidation(){
 }
 
 function updateFormState(){
+
   const nombre = document.getElementById("nombre");
   const correo = document.getElementById("correo");
   const telefono = document.getElementById("telefono");
   const empresa = document.getElementById("empresa");
   const tipo = document.getElementById("tipo_demo");
   const mensaje = document.getElementById("mensaje");
+
   const submitBtn = document.getElementById("submitBtn");
   const sendOtpBtn = document.getElementById("sendOtpBtn");
 
@@ -272,18 +274,22 @@ function updateFormState(){
 
   const tipoOk = Boolean(tipo.value);
 
-  const mensajeOk = 
-    mensaje.value.trim().length >= 10; &&
+  const mensajeOk =
+    mensaje.value.trim().length >= 10 &&
     mensaje.value.trim().length <= 500;
-    
+
+  // 🔹 Paso 1: habilitar correo
   correo.disabled = !nombreOk;
 
+  // 🔹 Paso 2: botón OTP
   if (sendOtpBtn) {
     sendOtpBtn.disabled = !(nombreOk && correoOk) || emailVerified;
   }
 
+  // 🔹 Paso 3: teléfono solo si OTP validado
   telefono.disabled = !emailVerified;
 
+  // 🔹 Bloque total si no está verificado
   if (!emailVerified) {
     empresa.disabled = true;
     tipo.disabled = true;
@@ -292,11 +298,13 @@ function updateFormState(){
     return;
   }
 
+  // 🔹 Paso 4: habilitar siguientes campos
   empresa.disabled = !telefonoOk;
   tipo.disabled = !telefonoOk;
 
   mensaje.disabled = !(telefonoOk && empresaOk && tipoOk);
 
+  // 🔥 Paso FINAL: botón enviar
   submitBtn.disabled = !(
     nombreOk &&
     correoOk &&
