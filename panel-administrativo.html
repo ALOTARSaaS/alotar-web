@@ -1,124 +1,447 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Panel Administrativo | ALOTAR</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
 
-  <style>
-    body{
-      margin:0;
-      background:#05070b;
-      color:#eaf1fb;
-      font-family:system-ui;
-    }
+  <!-- FAVICON ALOTAR -->
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="android-chrome-192x192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="android-chrome-512x512.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="manifest" href="site.webmanifest">
+  <meta name="theme-color" content="#070b12">
+  <meta name="apple-mobile-web-app-title" content="ALOTAR">
 
-    .container{
-      max-width:1000px;
-      margin:auto;
-      padding:40px 20px;
-    }
-
-    h1{
-      color:#d4b16a;
-      font-size:32px;
-      margin-bottom:10px;
-    }
-
-    h2{
-      color:#d4b16a;
-      margin-top:30px;
-    }
-
-    .card{
-      background:#0b1320;
-      border:1px solid rgba(212,177,106,.3);
-      border-radius:16px;
-      padding:20px;
-      margin-top:20px;
-    }
-
-    ul{
-      padding-left:20px;
-      line-height:1.6;
-    }
-
-    .ok{ color:#22c55e; }
-    .bad{ color:#f87171; }
-
-    .btn{
-      display:inline-block;
-      margin-top:20px;
-      padding:10px 16px;
-      border-radius:10px;
-      text-decoration:none;
-      font-weight:bold;
-      background:linear-gradient(180deg,#fff0a8,#f5d77a,#d3a32a);
-      color:#1a1405;
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
 
-<div class="container">
+<header class="site-header">
+  <div class="container nav">
 
-  <h1>Panel Administrativo ALOTAR</h1>
-  <p>Guía práctica para operar tu sistema de reservas.</p>
+    <a href="index.html#inicio" class="brand" aria-label="Ir al inicio">
+      <img src="logo.png" alt="ALOTAR Logo" class="brand-icon">
 
-  <div class="card">
-    <h2>1. Acceso</h2>
-    <ul>
-      <li>Abre el correo recibido.</li>
-      <li>Haz clic en <strong>Panel Administrativo</strong>.</li>
-      <li>Ingresa con tu PIN si es requerido.</li>
-    </ul>
-    <p class="bad">⚠️ No compartas este acceso con clientes.</p>
+      <div class="brand-text-wrap">
+        <div class="brand-main">ALOTAR</div>
+        <div class="brand-sub">Booking System</div>
+      </div>
+    </a>
+
+    <nav class="menu" aria-label="Menú principal">
+      <a href="index.html#inicio">Inicio</a>
+      <a href="index.html#solucion">Solución</a>
+      <a href="index.html#beneficios">Beneficios</a>
+      <a href="index.html#contacto">Contacto</a>
+      <a href="configuracion.html">Configuración</a>
+      <a class="active" href="panel-administrativo.html">Panel</a>
+    </nav>
+
+    <a class="btn btn-primary btn-glow" href="index.html?mode=soporte#contacto">
+      Solicitar ayuda
+    </a>
+
   </div>
+</header>
 
-  <div class="card">
-    <h2>2. Qué puedes hacer</h2>
-    <ul>
-      <li>Revisar reservas</li>
-      <li>Validar horarios</li>
-      <li>Controlar sedes</li>
-      <li>Ver actividad del sistema</li>
-    </ul>
+<main>
+
+<section class="section alt" id="panel-administrativo">
+  <div class="container">
+
+    <div class="section-heading">
+      <p class="eyebrow">Guía de uso</p>
+
+      <h1>
+        Paso 2: Uso del <span class="gold-text">Panel Administrativo</span>
+      </h1>
+
+      <p>
+        Aprende a validar tu sistema de reservas y asegurar que todo funcione correctamente antes de compartirlo con tus clientes.
+      </p>
+
+      <p style="margin-top:10px;color:#9fb0c9;">
+        Paso 2 de 2 — Validación y operación del sistema.
+      </p>
+    </div>
+
+    <div class="cards one">
+
+      <article class="card">
+        <h3>🔐 1. Acceso al Panel Administrativo</h3>
+
+        <p>
+          El Panel Administrativo es el espacio interno donde podrás revisar y validar el funcionamiento de tu sistema de reservas.
+        </p>
+
+        <ol>
+          <li>Abre el correo recibido de ALOTAR.</li>
+          <li>Busca el enlace llamado <strong>Panel Administrativo</strong>.</li>
+          <li>Haz clic en el enlace.</li>
+          <li>Si el sistema solicita PIN, ingresa el PIN administrativo asignado.</li>
+        </ol>
+
+        <p class="bad">
+          ⚠️ No compartas este enlace con tus clientes finales.
+        </p>
+
+        <p class="good">
+          ✔ Este acceso es solo para personal autorizado de tu empresa.
+        </p>
+      </article>
+
+      <article class="card">
+  <h3>🧭 2. Estructura general del Panel Administrativo</h3>
+
+  <p>
+    El Panel Administrativo está dividido en tres zonas principales. Cada una cumple una función diferente.
+  </p>
+
+  <ul>
+    <li>
+      <strong>Panel izquierdo:</strong> muestra el resumen diario de reservas, asistencia, cancelaciones y disponibilidad.
+    </li>
+    <li>
+      <strong>Panel derecho:</strong> permite crear o consultar la agenda del orientador para una fecha específica.
+    </li>
+    <li>
+      <strong>Parte inferior:</strong> permite consultar los PIN del día por sede para procesos de validación.
+    </li>
+  </ul>
+
+  <p class="good">
+    ✔ Primero configura agenda y horarios en el panel derecho. Luego valida reservas en el panel izquierdo.
+  </p>
+</article>
+
+<article class="card">
+  <h3>📊 3. Panel izquierdo: Dashboard por fecha</h3>
+
+  <p>
+    Este panel sirve para revisar qué ocurrió en una fecha específica.
+  </p>
+
+  <ul>
+    <li><strong>Fecha:</strong> selecciona el día que deseas consultar.</li>
+    <li><strong>Bloque / sede:</strong> permite ver todos los bloques del día o filtrar por una sede específica.</li>
+    <li><strong>Exportar PDF:</strong> genera un reporte del día para guardar o compartir internamente.</li>
+    <li><strong>Reservados:</strong> número de reservas registradas.</li>
+    <li><strong>Asistieron:</strong> clientes que realizaron check-in o fueron marcados como asistidos.</li>
+    <li><strong>No asistieron:</strong> clientes que no llegaron a la cita.</li>
+    <li><strong>Cancelaron:</strong> reservas canceladas.</li>
+    <li><strong>Activos:</strong> reservas vigentes para ese día.</li>
+    <li><strong>Disponibles:</strong> cupos disponibles según capacidad configurada.</li>
+  </ul>
+
+  <p class="bad">
+    ⚠️ Si aparece “Sin agenda”, significa que todavía no existe agenda configurada para esa fecha.
+  </p>
+
+  <p class="good">
+    ✔ Usa este panel todos los días para controlar la operación.
+  </p>
+</article>
+
+<article class="card">
+  <h3>🗓 4. Panel derecho: Agenda del orientador</h3>
+
+  <p>
+    Este panel permite definir en qué sede, horario y capacidad atenderá el orientador en una fecha específica.
+  </p>
+
+  <ul>
+    <li><strong>Fecha agenda:</strong> día para el cual se está configurando la atención.</li>
+    <li><strong>Sede del orientador:</strong> sede física o virtual asignada para ese bloque.</li>
+    <li><strong>Hora inicio:</strong> hora desde la cual inicia la atención.</li>
+    <li><strong>Hora fin:</strong> hora hasta la cual termina la atención.</li>
+    <li><strong>Capacidad:</strong> número máximo de personas o reservas permitidas para ese bloque.</li>
+  </ul>
+
+  <p>
+    Botones principales:
+  </p>
+
+  <ul>
+    <li><strong>Agregar bloque:</strong> agrega un bloque de atención a la agenda del día.</li>
+    <li><strong>Guardar agenda del día:</strong> guarda todos los bloques configurados para esa fecha.</li>
+    <li><strong>Recargar vista:</strong> actualiza la información mostrada.</li>
+    <li><strong>No se puede eliminar:</strong> indica que ese bloque no puede borrarse en ese momento, normalmente por reglas de seguridad o reservas existentes.</li>
+  </ul>
+
+  <p class="bad">
+    ⚠️ No modifiques una agenda con reservas existentes sin revisar primero el impacto operativo.
+  </p>
+
+  <p class="good">
+    ✔ Crea primero la agenda del día antes de compartir disponibilidad con los clientes.
+  </p>
+</article>
+
+<article class="card">
+  <h3>🔐 5. PIN del día por sede</h3>
+
+  <p>
+    La sección inferior permite consultar los PIN diarios asociados a cada sede.
+    Estos códigos se usan para procesos de validación interna, check-in o control de acceso según la configuración del sistema.
+  </p>
+
+  <ul>
+    <li><strong>Fecha:</strong> selecciona el día para consultar los PIN.</li>
+    <li><strong>Ver PINs:</strong> muestra los códigos disponibles para esa fecha.</li>
+    <li><strong>Sede:</strong> identifica a qué sede corresponde cada PIN.</li>
+    <li><strong>PIN:</strong> código que puede usarse para validación operativa.</li>
+  </ul>
+
+  <p class="bad">
+    ⚠️ Los PIN son información interna. No deben publicarse ni compartirse con personas no autorizadas.
+  </p>
+
+  <p class="good">
+    ✔ Usa los PIN únicamente para validaciones del día y por sede correspondiente.
+  </p>
+</article>
+
+<article class="card">
+  <h3>✅ 6. Orden recomendado de uso</h3>
+
+  <ol>
+    <li>Ingresa al Panel Administrativo.</li>
+    <li>En el panel derecho, selecciona la fecha de agenda.</li>
+    <li>Selecciona la sede del orientador.</li>
+    <li>Define hora de inicio, hora fin y capacidad.</li>
+    <li>Haz clic en <strong>Agregar bloque</strong>.</li>
+    <li>Haz clic en <strong>Guardar agenda del día</strong>.</li>
+    <li>En el panel izquierdo, consulta la misma fecha.</li>
+    <li>Verifica que ya no aparezca “Sin agenda”.</li>
+    <li>Haz una reserva de prueba desde el link público.</li>
+    <li>Confirma que la reserva aparezca en el dashboard y en Google Calendar.</li>
+  </ol>
+
+  <p class="good">
+    ✔ Si estos pasos funcionan, el sistema está listo para operación.
+  </p>
+</article>
+
+      <article class="card">
+        <h3>📊 7. Qué debes validar en el panel</h3>
+
+        <p>
+          Antes de compartir tu link público de reservas, revisa que el sistema esté funcionando correctamente.
+        </p>
+
+        <ul>
+          <li>Que las reservas se registren correctamente.</li>
+          <li>Que los datos del cliente sean visibles.</li>
+          <li>Que la fecha y hora coincidan con la reserva realizada.</li>
+          <li>Que la sede seleccionada sea correcta.</li>
+          <li>Que el evento aparezca en Google Calendar.</li>
+        </ul>
+
+        <p class="good">
+          ✔ Si estos puntos funcionan, tu sistema está listo para operar.
+        </p>
+      </article>
+
+      <article class="card">
+        <h3>🧪 8. Prueba obligatoria antes de compartir</h3>
+
+        <p>
+          Realiza una reserva de prueba como si fueras un cliente real.
+        </p>
+
+        <ol>
+          <li>Abre el <strong>link público de reservas</strong>.</li>
+          <li>Selecciona una sede o servicio disponible.</li>
+          <li>Elige una fecha y horario.</li>
+          <li>Completa los datos de prueba.</li>
+          <li>Confirma la reserva.</li>
+          <li>Verifica que llegue el correo de confirmación.</li>
+          <li>Revisa que la reserva aparezca en Google Calendar.</li>
+        </ol>
+
+        <p class="bad">
+          ⚠️ No compartas el sistema con clientes antes de hacer esta prueba.
+        </p>
+
+        <p class="good">
+          ✔ La prueba confirma que calendario, sedes, horarios y correos están funcionando.
+        </p>
+      </article>
+
+      <article class="card">
+        <h3>🌐 9. Link público de reservas</h3>
+
+        <p>
+          El link público es el enlace que debes compartir con tus clientes para que puedan reservar.
+        </p>
+
+        <ul>
+          <li>Este enlace es para tus clientes finales.</li>
+          <li>No requiere acceso al Panel Administrativo.</li>
+          <li>No debe confundirse con el enlace de configuración.</li>
+          <li>No debe confundirse con el enlace del panel interno.</li>
+        </ul>
+
+        <p class="good">
+          ✔ Comparte únicamente el link público cuando la prueba de reserva haya sido exitosa.
+        </p>
+
+        <p class="bad">
+          ⚠️ Error común: enviar a los clientes el enlace administrativo en vez del enlace público.
+        </p>
+      </article>
+
+      <article class="card">
+        <h3>🏢 10. Revisión de sedes</h3>
+
+        <p>
+          Verifica que las sedes configuradas sean claras para tus clientes.
+        </p>
+
+        <h3>Sede física</h3>
+        <ul>
+          <li>Nombre visible de la sede.</li>
+          <li>Dirección completa.</li>
+          <li>Ciudad o zona de atención.</li>
+          <li>Enlace de Google Maps si aplica.</li>
+        </ul>
+
+        <h3>Sede virtual</h3>
+        <ul>
+          <li>Plataforma usada: Google Meet, Zoom, Teams u otra.</li>
+          <li>Link o instrucciones de acceso.</li>
+          <li>Notas claras para el usuario.</li>
+        </ul>
+
+        <p class="bad">
+          ⚠️ Una sede mal configurada puede generar confusión en el cliente final.
+        </p>
+      </article>
+
+      <article class="card">
+        <h3>⏰ 11. Revisión de horarios</h3>
+
+        <p>
+          Los horarios determinan cuándo tus clientes podrán reservar.
+        </p>
+
+        <ul>
+          <li>Confirma que existan horarios disponibles.</li>
+          <li>Revisa que la hora de inicio y finalización sean correctas.</li>
+          <li>Verifica que no existan cruces entre sedes.</li>
+          <li>Confirma la capacidad si manejas cupos.</li>
+        </ul>
+
+        <p class="good">
+          ✔ Si no hay horarios disponibles, el cliente no podrá reservar.
+        </p>
+      </article>
+
+      <article class="card">
+        <h3>📩 12. Correos de confirmación</h3>
+
+        <p>
+          Después de crear una reserva de prueba, revisa que los correos automáticos estén llegando correctamente.
+        </p>
+
+        <ul>
+          <li>Correo de confirmación al cliente.</li>
+          <li>Notificación interna para tu empresa, si aplica.</li>
+          <li>Datos correctos de fecha, hora, sede y contacto.</li>
+        </ul>
+
+        <p class="bad">
+          ⚠️ Revisa también la carpeta de spam o promociones.
+        </p>
+      </article>
+
+      <article class="card">
+        <h3>⚠️ 13. Errores comunes</h3>
+
+        <ul>
+          <li>Compartir el enlace del Panel Administrativo con clientes.</li>
+          <li>No hacer una reserva de prueba.</li>
+          <li>No verificar que el evento aparezca en Google Calendar.</li>
+          <li>No revisar que existan horarios disponibles.</li>
+          <li>No confirmar que las sedes estén bien descritas.</li>
+          <li>Confundir el enlace público con el enlace de configuración.</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h3>✅ 14. Checklist final antes de operar</h3>
+
+        <ul>
+          <li>Calendar ID configurado correctamente.</li>
+          <li>Logo visible en el sistema.</li>
+          <li>Sedes revisadas.</li>
+          <li>Horarios disponibles.</li>
+          <li>Reserva de prueba realizada.</li>
+          <li>Evento visible en Google Calendar.</li>
+          <li>Correo de confirmación recibido.</li>
+          <li>Link público identificado correctamente.</li>
+        </ul>
+
+        <p class="good">
+          ✔ Si todos los puntos están correctos, tu sistema ALOTAR está listo para compartirse.
+        </p>
+      </article>
+
+    </div>
+
+    <div class="hero-actions top-gap">
+      <a class="btn btn-primary btn-glow" href="index.html?mode=soporte#contacto">
+        Solicitar ayuda
+      </a>
+
+      <a class="btn btn-outline" href="configuracion.html">
+        Volver a configuración
+      </a>
+    </div>
+
   </div>
+</section>
 
-  <div class="card">
-    <h2>3. Validar reservas</h2>
-    <ul>
-      <li>Confirma nombre, fecha y hora</li>
-      <li>Verifica la sede</li>
-      <li>Revisa que aparezca en el calendario</li>
-    </ul>
-    <p class="ok">✔ Haz pruebas antes de compartir el sistema</p>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-wrap">
+
+    <div class="footer-brand">
+      <img src="logo.png" alt="ALOTAR Logo" class="footer-logo">
+
+      <div>
+        <strong>Powered by ALOTAR</strong>
+        <p>Booking System Technology</p>
+      </div>
+    </div>
+
+    <div class="footer-meta">
+      <a href="mailto:info@alotar.com">info@alotar.com</a>
+      <a href="index.html#contacto">Solicitar demo</a>
+      <span>© 2026 · All rights reserved</span>
+    </div>
+
   </div>
+</footer>
 
-  <div class="card">
-    <h2>4. Link público</h2>
-    <ul>
-      <li>Este es el enlace que compartes con tus clientes</li>
-      <li>No cambia</li>
-      <li>Debe ser probado antes</li>
-    </ul>
-  </div>
+<button
+  class="scroll-top-btn"
+  onclick="window.scrollTo({top:0, behavior:'smooth'})"
+  aria-label="Volver arriba"
+  title="Volver arriba"
+>
+  ↑
+</button>
 
-  <div class="card">
-    <h2>5. Errores comunes</h2>
-    <ul>
-      <li>No configurar sedes</li>
-      <li>No validar horarios</li>
-      <li>Compartir el link incorrecto</li>
-    </ul>
-  </div>
-
-  <a class="btn" href="configuracion.html">
-    Ir a guía de configuración
-  </a>
-
-</div>
+<script src="app.js?v=25"></script>
 
 </body>
 </html>
