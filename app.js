@@ -584,7 +584,7 @@ function showStatus(id, type, title, message){
 
   box.innerHTML = `
     <div class="status-icon">
-      ${getStatusIcon(type)}
+      ${getContextIcon(id, type)}
     </div>
     <div class="status-text">
       <strong>${title}</strong>
@@ -594,19 +594,72 @@ function showStatus(id, type, title, message){
 }
 
 function getStatusIcon(type){
+
+  // ✅ SUCCESS (check claro)
   if(type === "success"){
-    return `<svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg>`;
+    return `
+      <svg viewBox="0 0 24 24">
+        <path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/>
+      </svg>
+    `;
   }
 
+  // ❌ ERROR (triángulo advertencia)
   if(type === "error"){
-    return `<svg viewBox="0 0 24 24"><path d="M12 2 1 21h22L12 2Zm1 15h-2v2h2v-2Zm0-8h-2v6h2V9Z"/></svg>`;
+    return `
+      <svg viewBox="0 0 24 24">
+        <path d="M1 21h22L12 2 1 21Zm12-3h-2v2h2v-2Zm0-8h-2v6h2v-6Z"/>
+      </svg>
+    `;
   }
 
+  // ⚠️ WARNING (alerta clara)
   if(type === "warning"){
-    return `<svg viewBox="0 0 24 24"><path d="M12 2 1 21h22L12 2Zm0 14h2v2h-2v-2Zm0-8h2v6h-2V8Z"/></svg>`;
+    return `
+      <svg viewBox="0 0 24 24">
+        <path d="M12 2 1 21h22L12 2Zm0 5h2v6h-2V7Zm0 8h2v2h-2v-2Z"/>
+      </svg>
+    `;
   }
 
-  return `<svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm1 15h-2v-6h2v6Zm0-8h-2V7h2v2Z"/></svg>`;
+  // ℹ️ INFO (información clara)
+  return `
+    <svg viewBox="0 0 24 24">
+      <path d="M11 9h2V7h-2v2Zm0 8h2v-6h-2v6Zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 
+      10-4.48 10-10S17.52 2 12 2Z"/>
+    </svg>
+  `;
 }
 
+function getContextIcon(id, type){
+
+  // 🔐 OTP (correo / seguridad)
+  if(id === "otpNote"){
+    if(type === "success"){
+      return `<svg viewBox="0 0 24 24">
+        <path d="M12 1 3 5v6c0 5 3.8 9.7 9 11 5.2-1.3 9-6 9-11V5l-9-4Zm-1 11 2 2 4-4-1.4-1.4L13 11.2l-.6-.6L11 12Z"/>
+      </svg>`;
+    }
+
+    return `<svg viewBox="0 0 24 24">
+      <path d="M12 1 3 5v6c0 5 3.8 9.7 9 11 5.2-1.3 9-6 9-11V5l-9-4Z"/>
+    </svg>`;
+  }
+
+  // 📩 FORMULARIO (mensaje / envío)
+  if(id === "formNote"){
+    if(type === "success"){
+      return `<svg viewBox="0 0 24 24">
+        <path d="M2 4h20v16H2V4Zm2 2v.5l8 5 8-5V6H4Zm16 2.2-8 5-8-5V18h16V8.2Z"/>
+      </svg>`;
+    }
+
+    return `<svg viewBox="0 0 24 24">
+      <path d="M4 4h16v12H7l-3 3V4Z"/>
+    </svg>`;
+  }
+
+  // fallback
+  return getStatusIcon(type);
+}
 
