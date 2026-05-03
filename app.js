@@ -226,15 +226,31 @@ async function verifyOtpCode(){
     if (json.ok) {
       emailVerified = true;
 
+      const otpBox = document.getElementById("otpBox");
+
       document.getElementById("correo").readOnly = true;
       document.getElementById("otpCode").readOnly = true;
 
       sendOtpBtn.disabled = true;
       verifyOtpBtn.disabled = true;
 
-      setMsg(otpNote, "Tu correo ha sido verificado correctamente.", "ok");
+     // 🔥 Estado visual PRO
+     setMsg(
+       otpNote,
+       "Tu correo ha sido verificado correctamente.",
+       "ok"
+     );
 
-      updateFormState();
+     // 🔥 Marcar como completado
+     if (otpBox){
+       otpBox.classList.add("otp-completed");
+      }
+
+     // 🔥 Opcional: ocultar botones
+     sendOtpBtn.style.display = "none";
+     verifyOtpBtn.style.display = "none";
+
+     updateFormState();
 
     } else {
       verifyOtpBtn.disabled = false;
