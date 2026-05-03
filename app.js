@@ -168,7 +168,11 @@ async function sendOtpCode(){
       verifyOtpBtn.disabled = true;
       sendOtpBtn.disabled = true;
 
-      setMsg(otpNote, json.message || "Código enviado. Revisa tu correo.", "ok");
+      setMsg(
+         otpNote,
+         json.message || "Revisa tu correo e ingresa el código de verificación.",
+         "warning"
+      );
     } else {
       otpCode.value = "";
       otpCode.disabled = true;
@@ -228,7 +232,7 @@ async function verifyOtpCode(){
       sendOtpBtn.disabled = true;
       verifyOtpBtn.disabled = true;
 
-      setMsg(otpNote, "✅ Correo verificado correctamente.", "ok");
+      setMsg(otpNote, "Tu correo ha sido verificado correctamente.", "ok");
 
       updateFormState();
 
@@ -562,7 +566,7 @@ function setMsg(el, msg, type){
 
   // 🔥 Personalización por contexto
   if (el.id === "otpNote") {
-    if (type === "ok") title = "Correo verificado";
+    if (type === "ok") title = "Código enviado";
     if (type === "error") title = "Error de verificación";
     if (type === "loading") title = "Verificando";
   }
