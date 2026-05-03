@@ -57,6 +57,21 @@ img{
   display:block;
 }
 
+.label-icon{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin-bottom:8px;
+}
+
+.label-icon svg{
+  width:18px;
+  height:18px;
+  fill:#d4b16a;
+  flex:0 0 auto;
+  filter:drop-shadow(0 0 6px rgba(212,177,106,.25));
+}
+
 .container{
   width:min(var(--max), calc(100% - 40px));
   margin:0 auto;
