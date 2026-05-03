@@ -962,3 +962,116 @@ textarea:disabled{
   cursor: not-allowed;
   background: #020617;
 }
+
+/* =========================================================
+   STATUS BOX (MENSAJES VISUALES TIPO ALERTA)
+========================================================= */
+
+.status-box{
+  display:flex;
+  align-items:flex-start;
+  gap:14px;
+  padding:16px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.08);
+  background:linear-gradient(135deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+  margin-top:8px;
+  animation:fadeUpSoft .4s ease;
+}
+
+/* ICONO */
+.status-icon{
+  width:36px;
+  height:36px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:10px;
+  flex-shrink:0;
+}
+
+.status-icon svg{
+  width:18px;
+  height:18px;
+}
+
+/* TEXTO */
+.status-text strong{
+  display:block;
+  font-size:.85rem;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  margin-bottom:4px;
+}
+
+.status-text p{
+  margin:0;
+  font-size:.9rem;
+  color:var(--silver-main);
+}
+
+/* TIPOS DE MENSAJE */
+
+/* WARNING (amarillo) */
+.status-box.warning{
+  border:1px solid rgba(245,180,40,.35);
+  background:linear-gradient(135deg, rgba(245,180,40,.10), rgba(255,255,255,.03));
+}
+
+.status-box.warning .status-icon{
+  background:rgba(245,180,40,.15);
+  box-shadow:0 0 10px rgba(245,180,40,.25);
+}
+
+.status-box.warning svg{
+  fill:#f5d77a;
+}
+
+/* SUCCESS (verde) */
+.status-box.success{
+  border:1px solid rgba(34,197,94,.35);
+  background:linear-gradient(135deg, rgba(34,197,94,.12), rgba(255,255,255,.03));
+}
+
+.status-box.success .status-icon{
+  background:rgba(34,197,94,.18);
+  box-shadow:0 0 10px rgba(34,197,94,.25);
+}
+
+.status-box.success svg{
+  fill:#4ade80;
+}
+
+/* ERROR (rojo) */
+.status-box.error{
+  border:1px solid rgba(248,113,113,.35);
+  background:linear-gradient(135deg, rgba(248,113,113,.12), rgba(255,255,255,.03));
+}
+
+.status-box.error .status-icon{
+  background:rgba(248,113,113,.18);
+  box-shadow:0 0 10px rgba(248,113,113,.25);
+}
+
+.status-box.error svg{
+  fill:#f87171;
+}
+
+/* INFO (azul/gris) */
+.status-box.info{
+  border:1px solid rgba(148,163,184,.35);
+  background:linear-gradient(135deg, rgba(148,163,184,.12), rgba(255,255,255,.03));
+}
+
+.status-box.info .status-icon{
+  background:rgba(148,163,184,.18);
+}
+
+.status-box.info svg{
+  fill:#cbd5e1;
+}
+
+/* HIDDEN */
+.hidden{
+  display:none !important;
+}

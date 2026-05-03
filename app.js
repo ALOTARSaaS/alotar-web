@@ -542,32 +542,71 @@ function isValidEmail(email){
 function setMsg(el, msg, type){
   if (!el) return;
 
-  let bg = "linear-gradient(135deg, rgba(245,180,40,.15), rgba(255,255,255,.05))";
-  let border = "1px solid rgba(212,160,23,.4)";
+  let statusType = "info";
+  let title = "Información";
 
   if (type === "ok") {
-    bg = "linear-gradient(135deg, rgba(34,197,94,.15), rgba(255,255,255,.05))";
-    border = "1px solid rgba(34,197,94,.4)";
+    statusType = "success";
+    title = "Correcto";
   }
 
   if (type === "error") {
-    bg = "linear-gradient(135deg, rgba(248,113,113,.15), rgba(255,255,255,.05))";
-    border = "1px solid rgba(248,113,113,.4)";
+    statusType = "error";
+    title = "Atención";
   }
 
-  el.innerHTML = `
-    <div style="
-      margin-top:10px;
-      padding:14px;
-      border-radius:12px;
-      background:${bg};
-      border:${border};
-      color:#e5e7eb;
-      font-size:14px;
-      line-height:1.5;
-    ">
-      ${msg}
+  if (type === "loading") {
+    statusType = "warning";
+    title = "Procesando";
+  }
+
+  // 🔥 Personalización por contexto
+  if (el.id === "otpNote") {
+    if (type === "ok") title = "Correo verificado";
+    if (type === "error") title = "Error de verificación";
+    if (type === "loading") title = "Verificando";
+  }
+
+  if (el.id === "formNote") {
+    if (type === "ok") title = "Solicitud enviada";
+    if (type === "error") title = "Error en solicitud";
+    if (type === "loading") title = "Enviando";
+  }
+
+  showStatus(el.id, statusType, title, msg);
+}
+
+function showStatus(id, type, title, message){
+  const box = document.getElementById(id);
+  if (!box) return;
+
+  box.className = `status-box ${type}`; // warning, success, error, info
+
+  box.innerHTML = `
+    <div class="status-icon">
+      ${getStatusIcon(type)}
+    </div>
+    <div class="status-text">
+      <strong>${title}</strong>
+      <p>${message}</p>
     </div>
   `;
 }
+
+function getStatusIcon(type){
+  if(type === "success"){
+    return `<svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg>`;
+  }
+
+  if(type === "error"){
+    return `<svg viewBox="0 0 24 24"><path d="M12 2 1 21h22L12 2Zm1 15h-2v2h2v-2Zm0-8h-2v6h2V9Z"/></svg>`;
+  }
+
+  if(type === "warning"){
+    return `<svg viewBox="0 0 24 24"><path d="M12 2 1 21h22L12 2Zm0 14h2v2h-2v-2Zm0-8h2v6h-2V8Z"/></svg>`;
+  }
+
+  return `<svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm1 15h-2v-6h2v6Zm0-8h-2V7h2v2Z"/></svg>`;
+}
+
 

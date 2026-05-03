@@ -338,7 +338,19 @@
       Verificar correo
     </button>
 
-    <p id="otpNote" class="form-note"></p>
+    <div id="otpNote" class="status-box warning hidden">
+  <div class="status-icon">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M12 1 3 5v6c0 5 3.8 9.7 9 11 5.2-1.3 9-6 9-11V5l-9-4Zm-1 7h2v5h-2V8Zm0 7h2v2h-2v-2Z"/>
+    </svg>
+  </div>
+
+  <div class="status-text">
+    <strong>Verificación pendiente</strong>
+    <p>Envía el código para confirmar tu correo.</p>
+  </div>
+</div>
+
   </div>
 
   <!-- TELÉFONO -->
@@ -394,7 +406,18 @@
     Enviar solicitud
   </button>
 
-  <p id="formNote" class="form-note"></p>
+  <div id="formNote" class="status-box info hidden">
+  <div class="status-icon">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M4 4h16v12H7l-3 3V4Zm3 4v2h10V8H7Zm0 4v2h7v-2H7Z"/>
+    </svg>
+  </div>
+
+  <div class="status-text">
+    <strong>Formulario</strong>
+    <p>Completa tus datos para enviar la solicitud.</p>
+  </div>
+</div>
 
 </form>
 
@@ -435,7 +458,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/intlTelInput.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/utils.js"></script>
-<script src="app.js?v=26"></script>
+<script src="app.js?v=27"></script>
 
 </body>
 </html>
