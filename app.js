@@ -246,11 +246,15 @@ async function verifyOtpCode(){
        otpBox.classList.add("otp-completed");
       }
 
-     // 🔥 Opcional: ocultar botones
-     sendOtpBtn.style.display = "none";
-     verifyOtpBtn.style.display = "none";
-
-     updateFormState();
+      // 🔥 Colapsar después de 2 segundos
+      setTimeout(() => {
+        if (otpBox){
+          otpBox.style.maxHeight = "80px";
+          otpBox.style.overflow = "hidden";
+          otpBox.style.transition = "all .4s ease";
+        }
+      }, 2000);
+      updateFormState();
 
     } else {
       verifyOtpBtn.disabled = false;
@@ -375,6 +379,7 @@ function resetOtp(){
   const otpCode = document.getElementById("otpCode");
   const verifyOtpBtn = document.getElementById("verifyOtpBtn");
   const otpNote = document.getElementById("otpNote");
+  const otpBox = document.getElementById("otpBox"); // 👈 NUEVO
 
   if (otpCode) {
     otpCode.value = "";
@@ -388,6 +393,14 @@ function resetOtp(){
 
   if (otpNote) {
     otpNote.innerHTML = "";
+    otpNote.className = "status-box hidden"; // 👈 limpia estado visual
+  }
+
+  // 🔥 RESET VISUAL COMPLETO
+  if (otpBox){
+    otpBox.classList.remove("otp-completed"); // quita estado verificado
+    otpBox.style.maxHeight = "";              // quita colapso
+    otpBox.style.overflow = "";               // restaura scroll
   }
 }
 
